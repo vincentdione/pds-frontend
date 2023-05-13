@@ -1,0 +1,626 @@
+
+
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <span class="title-center">{{dialogData.action}} Cadre </span>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+
+<mat-dialog-content>
+  <mat-horizontal-stepper [linear]="true" #stepper>
+    <mat-step [stepControl]="identificationForm">
+      <ng-template matStepLabel>Identification</ng-template>
+      <form [formGroup]="identificationForm">
+        <div class="grid-container">
+          <div class="grid-item">
+            <mat-form-field>
+              <mat-label>Nom</mat-label>
+              <input matInput formControlName="nom" required>
+              <mat-error *ngIf="identificationForm.controls.nom.touched && identificationForm.controls.nom.invalid">
+                <span *ngIf="identificationForm.controls.nom.errors.required" >This field is mandatory</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+        <div class="grid-item">
+        <mat-form-field>
+          <mat-label>Prénom</mat-label>
+          <input matInput formControlName="prenom" required>
+          <mat-error *ngIf="identificationForm.controls.nom.touched && identificationForm.controls.nom.invalid">
+            <span *ngIf="identificationForm.controls.nom.errors.required" >This field is mandatory</span>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="grid-item">
+          <mat-label>Sexe</mat-label>
+          <mat-radio-group  class="btnRadio"  formControlName="sexe" required>
+            <mat-radio-button value="masculin">Masculin</mat-radio-button>
+            <mat-radio-button value="feminin">Féminin</mat-radio-button>
+          </mat-radio-group>
+        <mat-error *ngIf="identificationForm.controls.sexe.touched && identificationForm.controls.sexe.invalid">
+          <span *ngIf="identificationForm.controls.sexe.errors.required" >This field is mandatory</span>
+        </mat-error>
+      </div>
+
+
+      <div class="grid-item">
+        <mat-form-field>
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" required>
+          <mat-error *ngIf="identificationForm.controls.email.touched && identificationForm.controls.email.invalid">
+            <span *ngIf="identificationForm.controls.email.errors.required" >This field is mandatory</span>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="grid-item">
+        <mat-form-field>
+          <mat-label>Résidence</mat-label>
+          <input matInput formControlName="residence" required>
+          <mat-error *ngIf="identificationForm.controls.residence.touched && identificationForm.controls.residence.invalid">
+            <span *ngIf="identificationForm.controls.residence.errors.required" >This field is mandatory</span>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="grid-item">
+        <mat-form-field>
+          <mat-label>Téléphone</mat-label>
+          <input matInput formControlName="telephone" required>
+          <mat-error *ngIf="identificationForm.controls.telephone.touched && identificationForm.controls.telephone.invalid">
+            <span *ngIf="identificationForm.controls.telephone.errors.required" >This field is mandatory</span>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="grid-item">
+        <mat-form-field>
+          <mat-label>Téléphone Fixe</mat-label>
+          <input matInput formControlName="telephoneFixe" required>
+          <mat-error *ngIf="identificationForm.controls.telephoneFixe.touched && identificationForm.controls.telephoneFixe.invalid">
+            <span *ngIf="identificationForm.controls.telephoneFixe.errors.required" >This field is mandatory</span>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="grid-item">
+        <mat-form-field>
+          <mat-label>Résidence</mat-label>
+          <input matInput formControlName="residence" required>
+          <mat-error *ngIf="identificationForm.controls.residence.touched && identificationForm.controls.residence.invalid">
+            <span *ngIf="identificationForm.controls.residence.errors.required" >This field is mandatory</span>
+          </mat-error>
+        </mat-form-field>
+      </div>
+        </div>
+
+    <!--     <div>
+          <mat-label>Image</mat-label>
+          <input   formControlName="image" type="file" (change)="onImageChange($event)">
+        </div>
+        <div *ngIf="imagePreview" class="image-preview">
+          <img [src]="imagePreview" alt="Image Preview">
+          <button mat-icon-button (click)="onRemoveImageClick()">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div> -->
+
+          <mat-label>Image </mat-label>
+        <input  type="file" formControlName="image" (change)="onFileChange($event)">
+        <img *ngIf="imagePreviewUrl" [src]="imagePreviewUrl" alt="Aperçu de l'image" width="150">
+        <mat-error *ngIf="identificationForm.controls.image.touched && identificationForm.controls.image.invalid">
+          <span *ngIf="identificationForm.controls.image.errors.required" >This field is mandatory</span>
+        </mat-error>
+
+
+      </form>
+    </mat-step>
+
+
+
+
+    <mat-step [stepControl]="situationMilitanteForm">
+      <ng-template matStepLabel>Situation Militante</ng-template>
+      <form [formGroup]="situationMilitanteForm">
+
+        <div class="grid-container">
+
+          <div class="grid-item">
+            <mat-form-field>
+              <mat-label>Adhésion au PDS </mat-label>
+              <input matInput formControlName="adhesionPds" required>
+              <mat-error *ngIf="situationMilitanteForm.controls.adhesionPds.touched && situationMilitanteForm.controls.adhesionPds.invalid">
+                <span *ngIf="situationMilitanteForm.controls.adhesionPds.errors.required" >This field is mandatory</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+
+          <div class="grid-item">
+            <mat-form-field>
+              <mat-label>Avez-vous la carte membre du parti? </mat-label>
+              <mat-select formControlName="carteMembre">
+                <mat-option value="Oui">Oui</mat-option>
+                <mat-option value="Non">Non</mat-option>
+              </mat-select>
+              <mat-error *ngIf="situationMilitanteForm.controls.carteMembre.touched && situationMilitanteForm.controls.carteMembre.invalid">
+                <span *ngIf="situationMilitanteForm.controls.carteMembre.errors.required" >This field is mandatory</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="grid-item">
+          <mat-form-field *ngIf="situationMilitanteForm.get('carteMembre').value === 'Oui'">
+            <mat-label>Année carte</mat-label>
+            <input matInput formControlName="anneeCarte">
+            <mat-error *ngIf="situationMilitanteForm.controls.anneeCarte.touched && situationMilitanteForm.controls.anneeCarte.invalid">
+              <span *ngIf="situationMilitanteForm.controls.anneeCarte.errors.required" >This field is mandatory</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="grid-item">
+          <mat-form-field *ngIf="situationMilitanteForm.get('carteMembre').value === 'Oui'">
+            <mat-label>Numéro Carte</mat-label>
+            <input matInput formControlName="numeroCarte">
+            <mat-error *ngIf="situationMilitanteForm.controls.numeroCarte.touched && situationMilitanteForm.controls.numeroCarte.invalid">
+              <span *ngIf="situationMilitanteForm.controls.numeroCarte.errors.required" >This field is mandatory</span>
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="grid-item">
+          <mat-form-field>
+            <mat-label>Avez-vous des fonctions dans le parti ?</mat-label>
+            <mat-select formControlName="fonctionsParti">
+              <mat-option value="secretariatNational">Secrétariat National</mat-option>
+              <mat-option value="comiteDirecteur">Comité Directeur</mat-option>
+              <mat-option value="comiteDiscipline">Comité Discipline</mat-option>
+              <mat-option value="autres">Autres</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="grid-item">
+          <mat-form-field>
+            <mat-label>N° Carte d'identité nationale</mat-label>
+            <input matInput formControlName="numeroCIN">
+          </mat-form-field>
+          <mat-error *ngIf="situationMilitanteForm.controls.numeroCIN.touched && situationMilitanteForm.controls.numeroCIN.invalid">
+            <span *ngIf="situationMilitanteForm.controls.numeroCIN.errors.required" >This field is mandatory</span>
+          </mat-error>
+        </div>
+
+        <div class="grid-item">
+          <mat-form-field>
+            <mat-label>Date de délivrance</mat-label>
+            <input matInput formControlName="dateDelivranceCIN" [matDatepicker]="datepickerDelivranceCIN">
+            <mat-datepicker-toggle matSuffix [for]="datepickerDelivranceCIN"></mat-datepicker-toggle>
+            <mat-datepicker #datepickerDelivranceCIN></mat-datepicker>
+          </mat-form-field>
+
+        </div>
+
+        <div class="grid-item">
+          <mat-form-field>
+            <mat-label>Date d'expiration</mat-label>
+            <input matInput formControlName="dateExpirationCIN" [matDatepicker]="datepickerExpirationCIN">
+            <mat-datepicker-toggle matSuffix [for]="datepickerExpirationCIN"></mat-datepicker-toggle>
+            <mat-datepicker #datepickerExpirationCIN></mat-datepicker>
+          </mat-form-field>
+
+        </div>
+
+        <div class="grid-item">
+          <mat-form-field>
+            <mat-label>N° Carte Electeur</mat-label>
+            <input matInput formControlName="numeroCarteElecteur">
+          </mat-form-field>
+          <mat-error *ngIf="situationMilitanteForm.controls.numeroCarteElecteur.touched && situationMilitanteForm.controls.numeroCarteElecteur.invalid">
+            <span *ngIf="situationMilitanteForm.controls.numeroCarteElecteur.errors.required" >This field is mandatory</span>
+          </mat-error>
+        </div>
+
+        <div class="grid-item">
+          <mat-form-field>
+            <mat-label>Centre de vote</mat-label>
+            <input matInput formControlName="centreVote">
+          </mat-form-field>
+          <mat-error *ngIf="situationMilitanteForm.controls.centreVote.touched && situationMilitanteForm.controls.centreVote.invalid">
+            <span *ngIf="situationMilitanteForm.controls.centreVote.errors.required" >This field is mandatory</span>
+          </mat-error>
+        </div>
+        <h3>Circonstances électorales</h3>
+        <br/>
+        <div class="grid-item">
+          <mat-form-field>
+            <mat-label>Fédération</mat-label>
+            <input matInput formControlName="federation">
+          </mat-form-field>
+          <mat-error *ngIf="situationMilitanteForm.controls.federation.touched && situationMilitanteForm.controls.federation.invalid">
+            <span *ngIf="situationMilitanteForm.controls.federation.errors.required" >This field is mandatory</span>
+          </mat-error>
+        </div>
+
+        <div class="grid-item">
+          <mat-form-field>
+            <mat-label>Section</mat-label>
+            <input matInput formControlName="section">
+          </mat-form-field>
+          <mat-error *ngIf="situationMilitanteForm.controls.section.touched && situationMilitanteForm.controls.section.invalid">
+            <span *ngIf="situationMilitanteForm.controls.section.errors.required" >This field is mandatory</span>
+          </mat-error>
+        </div>
+
+        <div class="grid-item">
+          <mat-form-field>
+            <mat-label>Secteur</mat-label>
+            <input matInput formControlName="secteur">
+          </mat-form-field>
+          <mat-error *ngIf="situationMilitanteForm.controls.secteur.touched && situationMilitanteForm.controls.secteur.invalid">
+            <span *ngIf="situationMilitanteForm.controls.secteur.errors.required" >This field is mandatory</span>
+          </mat-error>
+        </div>
+
+        <div class="grid-item">
+          <mat-form-field>
+            <mat-label>Mouvement Soutien</mat-label>
+            <input matInput formControlName="mouvementSoutien">
+          </mat-form-field>
+          <mat-error *ngIf="situationMilitanteForm.controls.mouvementSoutien.touched && situationMilitanteForm.controls.mouvementSoutien.invalid">
+            <span *ngIf="situationMilitanteForm.controls.mouvementSoutien.errors.required" >This field is mandatory</span>
+          </mat-error>
+        </div>
+
+        <h3>Lieu de vote</h3>
+        <br/>
+          <div class="grid-item">
+            <mat-form-field>
+              <mat-label>Région </mat-label>
+              <input matInput formControlName="region" required>
+              <mat-error *ngIf="situationMilitanteForm.controls.region.touched && situationMilitanteForm.controls.region.invalid">
+                <span *ngIf="situationMilitanteForm.controls.region.errors.required" >This field is mandatory</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="grid-item">
+            <mat-form-field>
+              <mat-label>Commune </mat-label>
+              <input matInput formControlName="commune" required>
+              <mat-error *ngIf="situationMilitanteForm.controls.commune.touched && situationMilitanteForm.controls.commune.invalid">
+                <span *ngIf="situationMilitanteForm.controls.commune.errors.required" >This field is mandatory</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="grid-item">
+            <mat-form-field>
+              <mat-label>Départ </mat-label>
+              <input matInput formControlName="depart" required>
+              <mat-error *ngIf="situationMilitanteForm.controls.depart.touched && situationMilitanteForm.controls.depart.invalid">
+                <span *ngIf="situationMilitanteForm.controls.depart.errors.required" >This field is mandatory</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="grid-item">
+            <mat-form-field>
+              <mat-label>Village </mat-label>
+              <input matInput formControlName="village" required>
+              <mat-error *ngIf="situationMilitanteForm.controls.village.touched && situationMilitanteForm.controls.village.invalid">
+                <span *ngIf="situationMilitanteForm.controls.village.errors.required" >This field is mandatory</span>
+              </mat-error>
+            </mat-form-field>
+        </div>
+        <h3>Centre de vote</h3>
+        <br/>
+
+          <div class="grid-item">
+            <mat-form-field>
+              <mat-label>Numéro de vote </mat-label>
+              <input matInput formControlName="numeroCentreVote" required>
+              <mat-error *ngIf="situationMilitanteForm.controls.numeroCentreVote.touched && situationMilitanteForm.controls.numeroCentreVote.invalid">
+                <span *ngIf="situationMilitanteForm.controls.numeroCentreVote.errors.required" >This field is mandatory</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+
+          <div class="grid-item">
+            <mat-form-field>
+              <mat-label>Numéro Bureau de vote </mat-label>
+              <input matInput formControlName="numeroBureauVote" required>
+              <mat-error *ngIf="situationMilitanteForm.controls.numeroBureauVote.touched && situationMilitanteForm.controls.numeroBureauVote.invalid">
+                <span *ngIf="situationMilitanteForm.controls.numeroBureauVote.errors.required" >This field is mandatory</span>
+              </mat-error>
+            </mat-form-field>
+        </div>
+
+
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="situationProfForm">
+      <ng-template matStepLabel>Situation Professionnelle</ng-template>
+      <form [formGroup]="situationProfForm">
+        <div class="grid-container">
+            <h3>Fonctions Antérieures</h3>
+            <br/>
+            <div class="grid-item">
+              <mat-form-field>
+                <mat-label>Intitulé fonction</mat-label>
+                <input matInput formControlName="intituleFonction1">
+              </mat-form-field>
+              <mat-error *ngIf="situationProfForm.controls.intituleFonction1.touched && situationProfForm.controls.intituleFonction1.invalid">
+                <span *ngIf="situationProfForm.controls.intituleFonction1.errors.required" >This field is mandatory</span>
+              </mat-error>
+            </div>
+
+            <div class="grid-item">
+              <mat-form-field>
+                <mat-label>Année</mat-label>
+                <input matInput formControlName="annee1">
+              </mat-form-field>
+              <mat-error *ngIf="situationProfForm.controls.annee1.touched && situationProfForm.controls.annee1.invalid">
+                <span *ngIf="situationProfForm.controls.annee1.errors.required" >This field is mandatory</span>
+              </mat-error>
+            </div>
+
+            <div class="grid-item">
+              <mat-form-field>
+                <mat-label>Intitulé fonction</mat-label>
+                <input matInput formControlName="intituleFonction2">
+              </mat-form-field>
+              <mat-error *ngIf="situationProfForm.controls.intituleFonction2.touched && situationProfForm.controls.intituleFonction2.invalid">
+                <span *ngIf="situationProfForm.controls.intituleFonction2.errors.required" >This field is mandatory</span>
+              </mat-error>
+            </div>
+
+            <div class="grid-item">
+              <mat-form-field>
+                <mat-label>Année</mat-label>
+                <input matInput formControlName="annee2">
+              </mat-form-field>
+              <mat-error *ngIf="situationProfForm.controls.annee2.touched && situationProfForm.controls.annee2.invalid">
+                <span *ngIf="situationProfForm.controls.annee2.errors.required" >This field is mandatory</span>
+              </mat-error>
+            </div>
+
+            <div class="grid-item">
+              <mat-label>CADRE EN ACTIVITE    RETRAITE  R D’EMPLOI  STAGIAIRE  INTERIMAIRE</mat-label>
+              <mat-radio-group  class="btnRadio"  formControlName="professionActuelle" required>
+                <mat-radio-button value="Oui">Oui</mat-radio-button>
+                <mat-radio-button value="Non">Non</mat-radio-button>
+              </mat-radio-group>
+            <mat-error *ngIf="situationProfForm.controls.professionActuelle.touched && situationProfForm.controls.professionActuelle.invalid">
+              <span *ngIf="situationProfForm.controls.professionActuelle.errors.required" >This field is mandatory</span>
+            </mat-error>
+            </div>
+
+            <div class="grid-item">
+              <mat-form-field>
+                <mat-label>Niveau d'étude</mat-label>
+                <input matInput formControlName="niveauEtude">
+              </mat-form-field>
+              <mat-error *ngIf="situationProfForm.controls.niveauEtude.touched && situationProfForm.controls.niveauEtude.invalid">
+                <span *ngIf="situationProfForm.controls.niveauEtude.errors.required" >This field is mandatory</span>
+              </mat-error>
+            </div>
+
+
+            <h3>Diplomes universitaires, grande école</h3>
+            <br/>
+
+            <div class="grid-item">
+              <mat-form-field>
+                <mat-label>Ecole</mat-label>
+                <input matInput formControlName="intituleEcole1">
+              </mat-form-field>
+              <mat-error *ngIf="situationProfForm.controls.intituleEcole1.touched && situationProfForm.controls.intituleEcole1.invalid">
+                <span *ngIf="situationProfForm.controls.intituleEcole1.errors.required" >This field is mandatory</span>
+              </mat-error>
+            </div>
+
+            <div class="grid-item">
+              <mat-form-field>
+                <mat-label>Année</mat-label>
+                <input matInput formControlName="anneeEcole1">
+              </mat-form-field>
+              <mat-error *ngIf="situationProfForm.controls.anneeEcole1.touched && situationProfForm.controls.anneeEcole1.invalid">
+                <span *ngIf="situationProfForm.controls.anneeEcole1.errors.required" >This field is mandatory</span>
+              </mat-error>
+            </div>
+
+
+            <div class="grid-item">
+              <mat-form-field>
+                <mat-label>Ecole</mat-label>
+                <input matInput formControlName="intituleEcole2">
+              </mat-form-field>
+              <mat-error *ngIf="situationProfForm.controls.intituleEcole2.touched && situationProfForm.controls.intituleEcole2.invalid">
+                <span *ngIf="situationProfForm.controls.intituleEcole2.errors.required" >This field is mandatory</span>
+              </mat-error>
+            </div>
+
+            <div class="grid-item">
+              <mat-form-field>
+                <mat-label>Année</mat-label>
+                <input matInput formControlName="anneeEcole2">
+              </mat-form-field>
+              <mat-error *ngIf="situationProfForm.controls.anneeEcole2.touched && situationProfForm.controls.anneeEcole2.invalid">
+                <span *ngIf="situationProfForm.controls.anneeEcole2.errors.required" >This field is mandatory</span>
+              </mat-error>
+            </div>
+
+            <div class="grid-item">
+              <mat-form-field>
+                <mat-label>Spécialisation</mat-label>
+                <input matInput formControlName="specialisation">
+              </mat-form-field>
+              <mat-error *ngIf="situationProfForm.controls.specialisation.touched && situationProfForm.controls.specialisation.invalid">
+                <span *ngIf="situationProfForm.controls.specialisation.errors.required" >This field is mandatory</span>
+              </mat-error>
+            </div>
+
+            <div class="grid-item">
+              <mat-form-field>
+                <mat-label>Langues parlées</mat-label>
+                <mat-select formArrayName="langueParlees">
+                  <mat-option *ngFor="let langue of ['Français', 'Anglais', 'Russe', 'Arabe', 'Japonais', 'Chinois']" [value]="langue">
+                    {{ langue }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="grid-item">
+              <mat-form-field>
+                <mat-label>Langues écrites</mat-label>
+                <mat-select formArrayName="langueEcrites">
+                  <mat-option *ngFor="let langue of ['Français', 'Anglais', 'Russe', 'Arabe', 'Japonais', 'Chinois']" [value]="langue">
+                    {{ langue }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+
+
+            <div class="grid-item">
+              <mat-form-field>
+                <mat-label>Autres Informations Uitles</mat-label>
+                <input matInput formControlName="autres">
+              </mat-form-field>
+              <mat-error *ngIf="situationProfForm.controls.autres.touched && situationProfForm.controls.autres.invalid">
+                <span *ngIf="situationProfForm.controls.autres.errors.required" >This field is mandatory</span>
+              </mat-error>
+            </div>
+          </div>
+      </form>
+    </mat-step>
+
+  </mat-horizontal-stepper>
+</mat-dialog-content>
+
+<!--
+<mat-dialog-content>
+  <mat-horizontal-stepper>
+  <mat-step>
+<form [formGroup]="cadreForm" >
+  <div fxFlex fxLayout="column">
+    <mat-form-field appearance="fill"  fxFlex >
+      <mat-label>Nom</mat-label>
+      <input matInput formControlName="nom" required>
+      <mat-error *ngIf="cadreForm.controls.nom.touched && cadreForm.controls.nom.invalid">
+        <span *ngIf="cadreForm.controls.nom.errors.required" >This field is mandatory</span>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill"  fxFlex >
+      <mat-label>Prenom</mat-label>
+      <input matInput formControlName="prenom" required>
+      <mat-error *ngIf="cadreForm.controls.prenom.touched && cadreForm.controls.prenom.invalid">
+        <span *ngIf="cadreForm.controls.prenom.errors.required" >This field is mandatory</span>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill"  fxFlex >
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email"  required>
+      <mat-error *ngIf="cadreForm.controls.email.touched && cadreForm.controls.email.invalid">
+        <span *ngIf="cadreForm.controls.email.errors.required" >This field is mandatory</span>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill"  fxFlex >
+      <mat-label>Adresse</mat-label>
+      <input matInput formControlName="adresse">
+    </mat-form-field>
+
+
+    <mat-form-field appearance="fill" class="example-form-field">
+      <mat-label>Date de naissance</mat-label>
+      <input matInput formControlName="dateNaissance" [matDatepicker]="datepicker">
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
+      <mat-datepicker #datepicker>
+        <mat-datepicker-actions>
+          <button mat-button matDatepickerCancel>Annuler</button>
+          <button mat-raised-button color="primary" matDatepickerApply>Choisir</button>
+        </mat-datepicker-actions>
+      </mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill"  fxFlex >
+      <mat-label>Telephone</mat-label>
+      <input matInput formControlName="telephone"  required>
+      <mat-error *ngIf="cadreForm.controls.telephone.touched && cadreForm.controls.telephone.invalid">
+        <span *ngIf="cadreForm.controls.telephone.errors.required" >This field is mandatory</span>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill"  fxFlex >
+      <mat-label>Telephone 2</mat-label>
+      <input matInput formControlName="telephone2">
+    </mat-form-field>
+
+  </div>
+</form>
+</mat-step>
+</mat-horizontal-stepper>
+</mat-dialog-content> -->
+<!-- <mat-dialog-content>
+
+<mat-step>
+  <form [formGroup]="cadreForm">
+    <mat-form-field>
+      <mat-label>Nom</mat-label>
+      <input matInput formControlName="nom" required>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Prénom</mat-label>
+      <input matInput formControlName="prenom" required>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Sexe</mat-label>
+      <mat-radio-group formControlName="sexe" required>
+        <mat-radio-button value="masculin">Masculin</mat-radio-button>
+        <mat-radio-button value="feminin">Féminin</mat-radio-button>
+      </mat-radio-group>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Téléphone</mat-label>
+      <input matInput formControlName="telephone" required>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Téléphone Fixe</mat-label>
+      <input matInput formControlName="telephoneFixe">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>WhatsApp</mat-label>
+      <input matInput formControlName="whatsapp">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" type="email" required>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Image</mat-label>
+      <input matInput formControlName="image" type="file" accept="image/*">
+    </mat-form-field>
+  </form>
+</mat-step>
+</mat-dialog-content> -->
+
+<mat-dialog-actions align="center">
+<!-- <button mat-raised-button class="btn" type="submit"
+(click)="handlePatientSubmit()" [disabled]="!(cadreForm.dirty && cadreForm.valid)" >{{action}}</button>
+<button mat-raised-button class="btn" mat-dialog-close>Fermer</button> -->
+<button mat-button (click)="onCancelClick()">Annuler</button>
+<button mat-raised-button class="btn" (click)="onSubmitClick(stepper)">Suivant</button>
+
+</mat-dialog-actions>

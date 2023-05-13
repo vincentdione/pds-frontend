@@ -1,0 +1,37 @@
+
+<body>
+
+  <mat-card>
+   <b><span>Dashboard</span></b>
+ </mat-card>
+<br>
+<div class="row">
+  <div class="column">
+    <div class="card">
+      <div class="container">
+        <h2 class="title"> Total des cadres : </h2>
+        <h1 class="title"> {{data?.length}} </h1>
+        <p> <button class="button" [routerLink]="['/workspace/cadres']" >Voir les cadres</button> </p>
+      </div>
+    </div>
+  </div>
+  <div class="column">
+    <div class="card">
+      <div class="container">
+        <h2 class="title"> Total des analyses : </h2>
+        <h1 class="title"> 3 </h1>
+        <p> <button class="button" [routerLink]="['/workspace/cadres']" >Voir les utilisateurs</button> </p>
+      </div>
+    </div>
+  </div>
+<!--   <div class="column">
+    <div class="card">
+      <div class="container">
+        <h2 class="title"> Total des hopitaux : </h2>
+        <h1 class="title"> 3 </h1>
+        <p> <button class="button" [routerLink]="['/workspace/cadres']" >Voir les utilisateurs</button> </p>
+      </div>
+    </div>
+  </div> -->
+</div>
+</body>
