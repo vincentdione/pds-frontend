@@ -1,0 +1,26 @@
+.circular-image {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.profile-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.scrollable-content {
+  overflow: auto;
+  max-height: 600px; /* Ajustez la valeur en fonction de vos besoins */
+}
+
+.identification {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.flex-1 {
+  flex: 1;
+}
+

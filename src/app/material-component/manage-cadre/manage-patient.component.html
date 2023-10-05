@@ -5,12 +5,86 @@
   <button mat-flat-button  class="float-right" (click)="handleAddCadre()">Ajouter un cadre</button>
 </mat-card>
 <hr>
-<mat-card>
-  <mat-form-field appearance="fill" >
+
+<!-- <mat-card>
+  <mat-form-field appearance="fill">
     <mat-label>Filtrer</mat-label>
     <input matInput (keyup)="applyFilter($event)" #input>
   </mat-form-field>
 </mat-card>
+ -->
+<mat-card>
+  <div class="grid-container" [formGroup]="searchForm">
+    <div class="grid-item">
+      <mat-form-field appearance="fill">
+        <mat-label>Profession actuelle</mat-label>
+        <mat-select formControlName="professionActuelle">
+          <mat-option value="Oui">Oui</mat-option>
+          <mat-option value="Non">Non</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="grid-item">
+      <mat-form-field appearance="fill">
+        <mat-label>Langues</mat-label>
+        <mat-select formControlName="langues">
+          <mat-option value="anglais">Anglais</mat-option>
+          <mat-option value="francais">Français</mat-option>
+          <mat-option value="arabe">Arabe</mat-option>
+          <mat-option value="allemand">Allemand</mat-option>
+          <mat-option value="espagnol">Espagnol</mat-option>
+          <mat-option value="russe">Russe</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="grid-item">
+      <mat-form-field appearance="fill">
+        <mat-label>Niveau d'étude</mat-label>
+        <mat-select formControlName="niveauEtude">
+          <mat-option value="licence">Licence</mat-option>
+          <mat-option value="master">Master</mat-option>
+          <mat-option value="doctorat">Doctorat</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="grid-item">
+      <mat-form-field appearance="fill">
+        <mat-label>Spécialisation</mat-label>
+        <input matInput  formControlName="specialisation">
+      </mat-form-field>
+    </div>
+    <div class="grid-item">
+      <mat-form-field appearance="fill">
+        <mat-label>Fonctions au parti</mat-label>
+        <input matInput  formControlName="fonctionsParti">
+      </mat-form-field>
+    </div>
+    <div class="grid-item">
+      <mat-form-field appearance="fill">
+        <mat-label>Régions</mat-label>
+        <mat-select formControlName="region">
+          <mat-option *ngFor="let region of regions" [value]="region">{{ region.reg_name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="grid-item">
+      <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email">
+      </mat-form-field>
+    </div>
+    <div class="grid-item">
+      <mat-form-field appearance="fill">
+        <mat-label>Téléphone</mat-label>
+        <input matInput formControlName="telephone">
+      </mat-form-field>
+    </div>
+  </div>
+  <div>
+    <button mat-flat-button class="btn" (click)="handleSearch()">Rechercher</button>
+  </div>
+</mat-card>
+
 <hr>
 <div class="responsive_table">
    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
@@ -39,9 +113,16 @@
           <button mat-icon-button color="warn" matTooltip="Supprimer" (click)="handleDeleteCadre(element)" >
             <mat-icon>delete</mat-icon>
           </button>
+          <button mat-icon-button color="warn" matTooltip="details" (click)="handleDetailCadre(element)"  >
+            <mat-icon>list</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" matTooltip="details" (click)="handleRedirectDetailCadre(element)"  >
+            <mat-icon>skip_next</mat-icon>
+          </button>
         </td>
        </ng-container>
        <tr mat-header-row *matHeaderRowDef="displayColumns;sticky:true"></tr>
        <tr mat-row *matRowDef="let row;columns:displayColumns"></tr>
    </table>
+   <mat-paginator [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons></mat-paginator>
 </div>

@@ -16,4 +16,20 @@ table {
 
 .btn{
   background: var(--primary-color);
+  color: white;
 }
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  //grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Définit le nombre de colonnes en fonction de la largeur de la fenêtre */
+  gap:5px;
+}
+
+.grid-item {
+  padding: 0;
+  margin: 0;
+}
+
+
+

@@ -5,13 +5,18 @@
   <mat-card>
     <mat-toolbar color="primary">
       <mat-toolbar-row fxLayout="row">
-        <span class="title-center" >Se connecter</span>
+        <span class="title-center" >CONNEXION</span>
       </mat-toolbar-row>
     </mat-toolbar>
     <mat-dialog-content class="mat-typography">
       <form [formGroup]="loginForm" >
          <div fxFlex fxLayout="column">
-          <mat-form-field appearance="fill"  fxFlex >
+          <div class="image-container">
+            <div class="image-circle">
+            <img src="../../assets/img/logo.png" alt="Logo" width="200" height="200">
+          </div>
+        </div>
+        <mat-form-field appearance="fill"  fxFlex >
             <mat-label>Username</mat-label>
             <input matInput formControlName="username" required>
             <mat-error *ngIf="loginForm.controls.username.touched && loginForm.controls.username.invalid">

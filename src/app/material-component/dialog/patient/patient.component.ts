@@ -20,7 +20,7 @@ export class PatientComponent implements OnInit {
   dialogAction : any = "Ajouter"
   action :any = "Ajouter";
   responseMessage:any;
-  imagePreviewUrl: string | ArrayBuffer | any;
+  imagePreviewUrl: string | ArrayBuffer | null = null;
   langues: string[] = [];
 
 
@@ -87,8 +87,8 @@ export class PatientComponent implements OnInit {
       anneeEcole1: ['', Validators.required],
       anneeEcole2: ['', Validators.required],
       specialisation: ['', Validators.required],
-      langueParlees: this.formBuilder.array([]),
-      langueEcrites: this.formBuilder.array([]),
+      langueParlees: [[]],
+      langueEcrites: [[]],
       autres: ['', Validators.required],
 
     });
@@ -96,7 +96,13 @@ export class PatientComponent implements OnInit {
     if(this.dialogData.action === "Modifier"){
       this.dialogAction = "Modifier"
       this.action = "Modifier"
+      console.log("=========================================== this.dialogData =================================================================")
+      console.log(this.dialogData.data)
+      console.log(this.dialogData)
+      console.log("=========================================== this.dialogData =================================================================")
       this.identificationForm.patchValue(this.dialogData.data)
+      this.situationMilitanteForm.patchValue(this.dialogData.data)
+      this.situationProfForm.patchValue(this.dialogData.data)
     }
 
   }
@@ -113,6 +119,116 @@ export class PatientComponent implements OnInit {
 
   }
 
+  getLanguesParlees(): string[] {
+    return this.situationProfForm.get('langueParlees').value as string[];
+  }
+
+  getLanguesEcrites(): string[] {
+    return this.situationProfForm.get('langueEcrites').value as string[];
+  }
+  add() {
+    var identificationFormData = this.identificationForm.value;
+    var situationMilitanteFormData = this.situationMilitanteForm.value;
+    var situationProfFormData = this.situationProfForm.value;
+
+    const langueParlees = this.getLanguesParlees();
+    const langueEcrites = this.getLanguesEcrites();
+
+
+    const formData = new FormData();
+
+    if (identificationFormData.image instanceof File) {
+  formData.append("file", identificationFormData.image);
+} else {
+  console.error("identificationFormData.image is not a File object");
+  // Handle the error or log it as appropriate.
+}
+
+    var data = {
+
+      identification: {
+        nom: identificationFormData.nom,
+        prenom: identificationFormData.prenom,
+        sexe: identificationFormData.sexe,
+        telephone: identificationFormData.telephone,
+        residence: identificationFormData.residence,
+        telephoneFixe: identificationFormData.telephoneFixe,
+        whatsapp: identificationFormData.whatsapp,
+        email: identificationFormData.email,
+        image: identificationFormData.image
+      },
+      situationMilitante: {
+        adhesionPds: situationMilitanteFormData.adhesionPds,
+        carteMembre: situationMilitanteFormData.carteMembre,
+        anneeCarte: situationMilitanteFormData.anneeCarte,
+        numeroCarte: situationMilitanteFormData.numeroCarte,
+        fonctionsParti: situationMilitanteFormData.fonctionsParti,
+        numeroCIN: situationMilitanteFormData.numeroCIN,
+        dateDelivranceCIN: situationMilitanteFormData.dateDelivranceCIN,
+        dateExpirationCIN: situationMilitanteFormData.dateExpirationCIN,
+        numeroCarteElecteur: situationMilitanteFormData.numeroCarteElecteur,
+        centreVote: situationMilitanteFormData.centreVote,
+        federation: situationMilitanteFormData.federation,
+        section: situationMilitanteFormData.section,
+        secteur: situationMilitanteFormData.secteur,
+        mouvementSoutien: situationMilitanteFormData.mouvementSoutien,
+        region: situationMilitanteFormData.region,
+        commune: situationMilitanteFormData.commune,
+        depart: situationMilitanteFormData.depart,
+        village: situationMilitanteFormData.village,
+        numeroCentreVote: situationMilitanteFormData.numeroCentreVote,
+        numeroBureauVote: situationMilitanteFormData.numeroBureauVote
+      },
+      situationProf: {
+        professionActuelle: situationProfFormData.professionActuelle,
+        intituleFonction1: situationProfFormData.intituleFonction1,
+        intituleFonction2: situationProfFormData.intituleFonction2,
+        annee1: situationProfFormData.annee1,
+        annee2: situationProfFormData.annee2,
+        niveauEtude: situationProfFormData.niveauEtude,
+        intituleEcole1: situationProfFormData.intituleEcole1,
+        intituleEcole2: situationProfFormData.intituleEcole2,
+        anneeEcole1: situationProfFormData.anneeEcole1,
+        anneeEcole2: situationProfFormData.anneeEcole2,
+        specialisation: situationProfFormData.specialisation,
+        langueParlees: langueParlees,
+        langueEcrites: langueEcrites,
+        autres: situationProfFormData.autres
+      }
+
+    };
+
+    console.log("------------------------------------------------")
+    console.log("data "+JSON.stringify(data));
+    console.log("------------------------------------------------")
+
+    this.patientService.addCadre(data).subscribe(
+      (res: any) => {
+        this.dialogRef.close();
+        this.onAddPatient.emit();
+        this.responseMessage = res.message;
+        this.snackbarService.openSnackbar(
+          "Cadre ajouté avec succès",
+          "success"
+        );
+      },
+      (error) => {
+        this.dialogRef.close();
+        if (error.error?.message) {
+          this.responseMessage = error.error?.message;
+        } else {
+          this.responseMessage = GlobalConstants.genericErrorMessage;
+        }
+        this.snackbarService.openSnackbar(
+          this.responseMessage,
+          GlobalConstants.error
+        );
+      }
+    );
+  }
+
+
+/*
   add(){
     var formData = this.identificationForm.value;
 
@@ -143,22 +259,69 @@ export class PatientComponent implements OnInit {
     })
 
   }
-
+ */
   edit(){
 
     var formData = this.identificationForm.value;
-    console.log(this.identificationForm.value)
+
+    var situationMilitanteFormData = this.situationMilitanteForm.value;
+    var situationProfFormData = this.situationProfForm.value;
 
     var data = {
       id : this.dialogData.data.id,
-      nom : formData.nom,
-      prenom : formData.prenom,
-      adresse : formData.adresse,
-      dateNaissance : formData.dateNaissance,
-      email : formData.email,
-      telephone : formData.telephone,
-      telephone2 : formData.telephone2,
+      identification: {
+        nom: formData.nom,
+        prenom: formData.prenom,
+        sexe: formData.sexe,
+        telephone: formData.telephone,
+        residence: formData.residence,
+        telephoneFixe: formData.telephoneFixe,
+        whatsapp: formData.whatsapp,
+        email: formData.email,
+        image: formData.image
+      },
+      situationMilitante: {
+        adhesionPds: situationMilitanteFormData.adhesionPds,
+        carteMembre: situationMilitanteFormData.carteMembre,
+        anneeCarte: situationMilitanteFormData.anneeCarte,
+        numeroCarte: situationMilitanteFormData.numeroCarte,
+        fonctionsParti: situationMilitanteFormData.fonctionsParti,
+        numeroCIN: situationMilitanteFormData.numeroCIN,
+        dateDelivranceCIN: situationMilitanteFormData.dateDelivranceCIN,
+        dateExpirationCIN: situationMilitanteFormData.dateExpirationCIN,
+        numeroCarteElecteur: situationMilitanteFormData.numeroCarteElecteur,
+        centreVote: situationMilitanteFormData.centreVote,
+        federation: situationMilitanteFormData.federation,
+        section: situationMilitanteFormData.section,
+        secteur: situationMilitanteFormData.secteur,
+        mouvementSoutien: situationMilitanteFormData.mouvementSoutien,
+        region: situationMilitanteFormData.region,
+        commune: situationMilitanteFormData.commune,
+        depart: situationMilitanteFormData.depart,
+        village: situationMilitanteFormData.village,
+        numeroCentreVote: situationMilitanteFormData.numeroCentreVote,
+        numeroBureauVote: situationMilitanteFormData.numeroBureauVote
+      },
+      situationProf: {
+        professionActuelle: situationProfFormData.professionActuelle,
+        intituleFonction1: situationProfFormData.intituleFonction1,
+        intituleFonction2: situationProfFormData.intituleFonction2,
+        annee1: situationProfFormData.annee1,
+        annee2: situationProfFormData.annee2,
+        niveauEtude: situationProfFormData.niveauEtude,
+        intituleEcole1: situationProfFormData.intituleEcole1,
+        intituleEcole2: situationProfFormData.intituleEcole2,
+        anneeEcole1: situationProfFormData.anneeEcole1,
+        anneeEcole2: situationProfFormData.anneeEcole2,
+        specialisation: situationProfFormData.specialisation,
+        langueParlees: situationProfFormData.langueParlees,
+        langueEcrites: situationProfFormData.langueEcrites,
+        autres: situationProfFormData.autres
+      }
     }
+
+
+
 
     this.patientService.updateCadre(data).subscribe((res:any)=>{
        this.dialogRef.close()
@@ -182,6 +345,11 @@ export class PatientComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  onPreviousClick(stepper: any) {
+    stepper.previous();
+  }
+
+
   onSubmitClick(stepper:any) {
     if (stepper.selectedIndex === 0 && this.identificationForm.valid) {
       stepper.next();
@@ -191,19 +359,28 @@ export class PatientComponent implements OnInit {
     }
     else if (stepper.selectedIndex === 2 && this.situationProfForm.valid) {
       // Effectuer les actions nécessaires avec les données du formulaire
+      this.add()
       this.dialogRef.close();
     }
   }
 
   onFileChange(event: any) {
-    const file = event.target.files[0];
-    if (file) {
-      // Lecture de l'image en tant que Data URL
+    if (event.target.files && event.target.files[0]) {
+      const file = event.target.files[0];
+
+      // Afficher un aperçu de l'image
       const reader = new FileReader();
       reader.onload = (e: any) => {
         this.imagePreviewUrl = e.target.result;
       };
       reader.readAsDataURL(file);
+
+      // Mettre à jour la valeur du champ 'image' dans le formulaire
+      this.identificationForm.get('image')?.setValue(file);
+    } else {
+      // Réinitialiser l'aperçu de l'image si aucun fichier n'est sélectionné
+      this.imagePreviewUrl = null;
+      this.identificationForm.get('image')?.setValue(null);
     }
   }
 

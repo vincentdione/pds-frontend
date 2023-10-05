@@ -31,7 +31,8 @@ const routes: Routes = [
           data : {
             expectedRole: ["ROLE_ADMIN"]
           }
-      }
+      },
+
     ]
   },
   { path: '**', component: HomeComponent }

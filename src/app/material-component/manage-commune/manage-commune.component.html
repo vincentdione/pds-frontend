@@ -1,8 +1,8 @@
 
 
 <mat-card>
-  <b> <span>Gestion des régions</span> </b>
-  <button mat-flat-button  class="float-right" (click)="handleAddLocalite()" >Ajouter une région</button>
+  <b> <span>Gestion des communes</span> </b>
+  <button mat-flat-button  class="float-right" (click)="handleAddLocalite()" >Ajouter une commune</button>
 </mat-card>
 <hr>
 <mat-card>
@@ -14,13 +14,25 @@
 <hr>
 <div class="responsive_table">
    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+       <ng-container matColumnDef="dept">
+        <th mat-header-cell *matHeaderCellDef>Département</th>
+        <td mat-cell *matCellDef="let element">{{element.departement.dept_name}}</td>
+       </ng-container>
        <ng-container matColumnDef="nom">
-        <th mat-header-cell *matHeaderCellDef>Région</th>
-        <td mat-cell *matCellDef="let element">{{element.reg_name}}</td>
+        <th mat-header-cell *matHeaderCellDef>Commune</th>
+        <td mat-cell *matCellDef="let element">{{element.com_name}}</td>
        </ng-container>
        <ng-container matColumnDef="description">
         <th mat-header-cell *matHeaderCellDef>Description</th>
-        <td mat-cell *matCellDef="let element">{{element.reg_description}}</td>
+        <td mat-cell *matCellDef="let element">{{element.dept_description}}</td>
+       </ng-container>
+       <ng-container matColumnDef="electeurs">
+        <th mat-header-cell *matHeaderCellDef>Electeurs</th>
+        <td mat-cell *matCellDef="let element">{{element.com_nombreElecteurs}}</td>
+       </ng-container>
+       <ng-container matColumnDef="lieux">
+        <th mat-header-cell *matHeaderCellDef>Lieux</th>
+        <td mat-cell *matCellDef="let element">{{element.com_nombreLieuxDeVote}}</td>
        </ng-container>
        <ng-container matColumnDef="action">
         <th mat-header-cell *matHeaderCellDef>Action</th>

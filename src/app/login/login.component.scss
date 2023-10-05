@@ -1,4 +1,4 @@
-
+/*
 
 .mat-toolbar {
   margin : -24px;
@@ -21,4 +21,15 @@ mat-form-field {
 .btn {
   background-color: var(--primary-color);
 
+}
+ */
+ .container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+mat-card {
+  width: 300px;
 }

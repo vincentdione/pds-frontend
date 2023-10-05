@@ -10,7 +10,9 @@ export interface  Menu {
 const MENU_ITEMS = [
   {state : 'dashboard', name: 'Dashboard', icon: 'dashboard', role:'ROLE_ADMIN'},
   {state : 'cadres', name: 'Cadres', icon: 'people', role:'ROLE_ADMIN'},
-  {state : 'localites', name: 'Localités', icon: 'people', role:'ROLE_ADMIN'},
+  {state : 'regions', name: 'Régions', icon: 'house', role:'ROLE_ADMIN'},
+  {state : 'departements', name: 'Départements', icon: 'house', role:'ROLE_ADMIN'},
+  {state : 'communes', name: 'Communes', icon: 'house', role:'ROLE_ADMIN'},
 ]
 
 

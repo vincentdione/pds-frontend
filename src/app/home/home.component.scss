@@ -5,7 +5,7 @@
   align-items: center;
   justify-content: center;
   margin: 0 auto;
-  max-width: 900px;
+  max-width: 600px;
 }
 
 .mat-toolbar {
@@ -33,4 +33,33 @@ mat-form-field {
   background-color: var(--primary-color);
   color: var(--secondary-color);
 
+}
+
+
+.image-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.image-circle {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-circle img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}
+
+@media screen and (max-width: 600px) {
+  .image-container {
+    margin-bottom: 10px;
+  }
 }

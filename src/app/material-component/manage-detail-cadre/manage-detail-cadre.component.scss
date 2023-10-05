@@ -1,0 +1,44 @@
+
+.circular-image {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.profile-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 30px;
+
+}
+
+.scrollable-content {
+  overflow: auto;
+  padding: 50px;
+  max-height: 100%; /* Ajustez la valeur en fonction de vos besoins */
+}
+
+.identification {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 30px;
+}
+.flex-1 {
+  flex: 1;
+}
+
+
+.profile-info
+{
+  width: 500px;
+}
+
+.cardDetails{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+

@@ -59,7 +59,7 @@ export class LoginComponent implements OnInit {
       else {
         this.responseMessage = GlobalConstants.genericErrorMessage
       }
-      this.snackbarService.openSnackbar(this.responseMessage,GlobalConstants.error)
+      this.snackbarService.openSnackbar("Username ou mot de passe incorrect",GlobalConstants.error)
     })
 
   }

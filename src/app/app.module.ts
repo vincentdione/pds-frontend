@@ -19,6 +19,8 @@ import { NgxUiLoaderModule,NgxUiLoaderConfig, SPINNER,PB_DIRECTION } from 'ngx-u
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { LoginComponent } from './login/login.component';
 import { TokenInterceptorInterceptor } from './services/token-interceptor.interceptor';
+/* import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage'; */
 
  const ngxUiLoaderConfig : NgxUiLoaderConfig = {
   text: "Loading ...",
@@ -34,6 +36,16 @@ import { TokenInterceptorInterceptor } from './services/token-interceptor.interc
 
 
 }
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBxrXB6Xu9srs0sjSr1sNcAffSKMNGET-U",
+  authDomain: "gpimg-e6be6.firebaseapp.com",
+  projectId: "gpimg-e6be6",
+  storageBucket: "gpimg-e6be6.appspot.com",
+  messagingSenderId: "188516420512",
+  appId: "1:188516420512:web:98bbbfe7c1f93ee1bcb2c5",
+  measurementId: "G-N37W5QHDCV"
+};
 
 @NgModule({
   declarations: [
@@ -57,6 +69,8 @@ import { TokenInterceptorInterceptor } from './services/token-interceptor.interc
     FlexLayoutModule,
     SharedModule,
     HttpClientModule,
+/*     AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireStorageModule, */
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
   ],
   providers: [HttpClientModule,{provide: HTTP_INTERCEPTORS,useClass : TokenInterceptorInterceptor,multi:true}],

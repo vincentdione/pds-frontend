@@ -11,7 +11,7 @@
   <mat-horizontal-stepper [linear]="true" #stepper>
     <mat-step [stepControl]="identificationForm">
       <ng-template matStepLabel>Identification</ng-template>
-      <form [formGroup]="identificationForm">
+      <form [formGroup]="identificationForm" enctype="multipart/form-data">
         <div class="grid-container">
           <div class="grid-item">
             <mat-form-field>
@@ -87,10 +87,10 @@
 
       <div class="grid-item">
         <mat-form-field>
-          <mat-label>Résidence</mat-label>
-          <input matInput formControlName="residence" required>
-          <mat-error *ngIf="identificationForm.controls.residence.touched && identificationForm.controls.residence.invalid">
-            <span *ngIf="identificationForm.controls.residence.errors.required" >This field is mandatory</span>
+          <mat-label>Whatsapp</mat-label>
+          <input matInput formControlName="whatsapp" required>
+          <mat-error *ngIf="identificationForm.controls.whatsapp.touched && identificationForm.controls.whatsapp.invalid">
+            <span *ngIf="identificationForm.controls.whatsapp.errors.required" >This field is mandatory</span>
           </mat-error>
         </mat-form-field>
       </div>
@@ -469,7 +469,7 @@
             <div class="grid-item">
               <mat-form-field>
                 <mat-label>Langues parlées</mat-label>
-                <mat-select formArrayName="langueParlees">
+                <mat-select formControlName="langueParlees" multiple>
                   <mat-option *ngFor="let langue of ['Français', 'Anglais', 'Russe', 'Arabe', 'Japonais', 'Chinois']" [value]="langue">
                     {{ langue }}
                   </mat-option>
@@ -480,7 +480,7 @@
             <div class="grid-item">
               <mat-form-field>
                 <mat-label>Langues écrites</mat-label>
-                <mat-select formArrayName="langueEcrites">
+                <mat-select formControlName="langueEcrites" multiple>
                   <mat-option *ngFor="let langue of ['Français', 'Anglais', 'Russe', 'Arabe', 'Japonais', 'Chinois']" [value]="langue">
                     {{ langue }}
                   </mat-option>
@@ -621,6 +621,7 @@
 (click)="handlePatientSubmit()" [disabled]="!(cadreForm.dirty && cadreForm.valid)" >{{action}}</button>
 <button mat-raised-button class="btn" mat-dialog-close>Fermer</button> -->
 <button mat-button (click)="onCancelClick()">Annuler</button>
+<button mat-raised-button class="btn" (click)="onPreviousClick(stepper)">Précédent</button>
 <button mat-raised-button class="btn" (click)="onSubmitClick(stepper)">Suivant</button>
 
 </mat-dialog-actions>

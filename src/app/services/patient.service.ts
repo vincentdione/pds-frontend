@@ -34,6 +34,16 @@ export class PatientService {
     return this.httpClient.get(this.url+"/cadres/get/")
   }
 
+  getOneCadre(id:any){
+    return this.httpClient.get(this.url+"/cadres/find/"+id)
+  }
+
+  searchCadre(data:any){
+    console.log(data)
+    return this.httpClient.post(this.url+"/cadres/search/",data,{
+      headers: new HttpHeaders().set( 'Content-Type','application/json')
+    })
+  }
 
 
 }

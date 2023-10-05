@@ -3,28 +3,29 @@ import { GlobalConstants } from './../../shared/global-constants';
 import { MatTableDataSource } from '@angular/material/table';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { MatDialog } from '@angular/material/dialog';
+import { CommuneService } from './../../services/commune.service';
 import { SnackbarService } from './../../services/snackbar.service';
 import { Router } from '@angular/router';
-import { LocaliteService } from './../services/localite.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { RegionService } from 'src/app/services/region.service';
 
 @Component({
-  selector: 'app-manage-localite',
-  templateUrl: './manage-localite.component.html',
-  styleUrls: ['./manage-localite.component.scss']
+  selector: 'app-manage-commune',
+  templateUrl: './manage-commune.component.html',
+  styleUrls: ['./manage-commune.component.scss']
 })
-export class ManageLocaliteComponent implements OnInit {
+export class ManageCommuneComponent implements OnInit {
 
-  displayColumns : string [] = ["nom","description","action"];
+
+
+  displayColumns : string [] = ["dept","nom","description","electeurs","lieux","action"];
   dataSource:any;
   responseMessage : any;
 
   @ViewChild(MatPaginator, { static: true })
   paginator!: MatPaginator;
 
-  constructor(private localiteService: LocaliteService, private router: Router,
-    private snackbarService : SnackbarService, private regionService : RegionService,
+  constructor(private router: Router,
+    private snackbarService : SnackbarService, private communeService : CommuneService,
     private dialog : MatDialog, private ngxService: NgxUiLoaderService) { }
 
   ngOnInit(): void {
@@ -33,7 +34,7 @@ export class ManageLocaliteComponent implements OnInit {
   }
 
   tableData(){
-    this.regionService.getRegions().subscribe((res:any) => {
+    this.communeService.getCommunes().subscribe((res:any) => {
       this.ngxService.stop()
       this.dataSource = new MatTableDataSource(res)
       this.dataSource.paginator = this.paginator;

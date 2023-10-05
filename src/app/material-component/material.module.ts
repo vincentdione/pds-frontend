@@ -14,9 +14,13 @@ import { ConfirmationComponent } from './dialog/confirmation/confirmation.compon
 import { ChangePasswordComponent } from './dialog/change-password/change-password.component';
 import { ManagePatientComponent } from './manage-cadre/manage-patient.component';
 import { PatientComponent } from './dialog/patient/patient.component';
-import { ManageHospitalComponent } from './manage-hospital/manage-hospital.component';
 import { ManageUsersComponent } from './manage-users/manage-users.component';
 import { ManageLocaliteComponent } from './manage-localite/manage-localite.component';
+import { ManageDepartementComponent } from './manage-departement/manage-departement.component';
+import { ManageCommuneComponent } from './manage-commune/manage-commune.component';
+import { MaterialComponentComponent } from './material-component/material-component.component';
+import { DetailCadreComponent } from './dialog/detail-cadre/detail-cadre.component';
+import { ManageDetailCadreComponent } from './manage-detail-cadre/manage-detail-cadre.component';
 
 @NgModule({
   imports: [
@@ -36,9 +40,13 @@ import { ManageLocaliteComponent } from './manage-localite/manage-localite.compo
     ChangePasswordComponent,
     ManagePatientComponent,
     PatientComponent,
-    ManageHospitalComponent,
     ManageUsersComponent,
     ManageLocaliteComponent,
+    ManageDepartementComponent,
+    ManageCommuneComponent,
+    MaterialComponentComponent,
+    DetailCadreComponent,
+    ManageDetailCadreComponent
   ]
 })
 export class MaterialComponentsModule {}
