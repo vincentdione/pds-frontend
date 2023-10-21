@@ -16,6 +16,15 @@ export class AppHeaderComponent {
   constructor(private router: Router, private dialog : MatDialog) {
   }
 
+  ngOnInit(){
+    const roleFromLocalStorage = localStorage.getItem('role');
+    console.log("object is role from local storage "+this.role);
+
+    if (roleFromLocalStorage !== null) {
+      this.role = roleFromLocalStorage.replace(/"/g, '');
+    }
+  }
+
   logout(){
     const dialogConfig = new MatDialogConfig()
     dialogConfig.data = {

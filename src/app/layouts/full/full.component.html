@@ -12,8 +12,8 @@
                 Dashboard <strong style="color:#FFDE59">K2024</strong>
             </span>
         </div>
-        <span fxFlex></span>
-        <app-header></app-header>
+        <span fxFlex>   </span>
+        <b>{{role}}</b>  <app-header></app-header>
     </mat-toolbar>
     <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 0 : 0">
         <mat-sidenav #snav id="snav" class="dark-sidebar pl-xs" [mode]="mobileQuery.matches ? 'side' : 'over'"

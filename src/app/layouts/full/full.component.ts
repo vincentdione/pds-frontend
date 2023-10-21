@@ -11,7 +11,19 @@ import { ChangeDetectorRef, Component, OnDestroy, AfterViewInit } from '@angular
 export class FullComponent implements OnDestroy, AfterViewInit {
   mobileQuery: MediaQueryList;
 
+  role!:string;
+
   private _mobileQueryListener: () => void;
+
+
+  ngOnInit(){
+    const roleFromLocalStorage = localStorage.getItem('role');
+    console.log("object is role from local storage "+this.role);
+
+    if (roleFromLocalStorage !== null) {
+      this.role = roleFromLocalStorage.replace(/"/g, '');
+    }
+  }
 
   constructor(
     changeDetectorRef: ChangeDetectorRef,

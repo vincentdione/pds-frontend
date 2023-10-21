@@ -21,6 +21,19 @@ import { ManageCommuneComponent } from './manage-commune/manage-commune.componen
 import { MaterialComponentComponent } from './material-component/material-component.component';
 import { DetailCadreComponent } from './dialog/detail-cadre/detail-cadre.component';
 import { ManageDetailCadreComponent } from './manage-detail-cadre/manage-detail-cadre.component';
+import { AddUserComponent } from './dialog/add-user/add-user.component';
+
+
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBxrXB6Xu9srs0sjSr1sNcAffSKMNGET-U",
+  authDomain: "gpimg-e6be6.firebaseapp.com",
+  projectId: "gpimg-e6be6",
+  storageBucket: "gpimg-e6be6.appspot.com",
+  messagingSenderId: "188516420512",
+  appId: "1:188516420512:web:98bbbfe7c1f93ee1bcb2c5",
+  measurementId: "G-N37W5QHDCV"
+};
 
 @NgModule({
   imports: [
@@ -46,7 +59,8 @@ import { ManageDetailCadreComponent } from './manage-detail-cadre/manage-detail-
     ManageCommuneComponent,
     MaterialComponentComponent,
     DetailCadreComponent,
-    ManageDetailCadreComponent
+    ManageDetailCadreComponent,
+    AddUserComponent,
   ]
 })
 export class MaterialComponentsModule {}

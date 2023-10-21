@@ -11,15 +11,21 @@ export class PatientService {
 
   constructor(private httpClient : HttpClient) { }
 
-  addCadre(data:any){
+  addCadre(data:any,file:any){
     return this.httpClient.post(this.url+"/cadres/add/", data,{
       headers: new HttpHeaders().set( 'Content-Type','application/json')
     })
   }
 
-  updateCadre(data:any){
+  updateCadre(id:any,data:any){
     console.log(data)
-    return this.httpClient.patch(this.url+"/cadres/update/", data,{
+    return this.httpClient.patch(this.url+"/cadres/update/"+id, data,{
+      headers: new HttpHeaders().set( 'Content-Type','application/json')
+    })
+  }
+
+  uploadImages(id:any){
+    return this.httpClient.patch(this.url+"/cadres/upload/"+id,{
       headers: new HttpHeaders().set( 'Content-Type','application/json')
     })
   }

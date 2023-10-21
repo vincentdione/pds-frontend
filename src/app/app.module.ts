@@ -19,8 +19,7 @@ import { NgxUiLoaderModule,NgxUiLoaderConfig, SPINNER,PB_DIRECTION } from 'ngx-u
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { LoginComponent } from './login/login.component';
 import { TokenInterceptorInterceptor } from './services/token-interceptor.interceptor';
-/* import { AngularFireModule } from '@angular/fire/compat';
-import { AngularFireStorageModule } from '@angular/fire/compat/storage'; */
+
 
  const ngxUiLoaderConfig : NgxUiLoaderConfig = {
   text: "Loading ...",
@@ -69,8 +68,6 @@ const firebaseConfig = {
     FlexLayoutModule,
     SharedModule,
     HttpClientModule,
-/*     AngularFireModule.initializeApp(firebaseConfig),
-    AngularFireStorageModule, */
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
   ],
   providers: [HttpClientModule,{provide: HTTP_INTERCEPTORS,useClass : TokenInterceptorInterceptor,multi:true}],

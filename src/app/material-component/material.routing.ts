@@ -1,3 +1,4 @@
+import { ManageUsersComponent } from './manage-users/manage-users.component';
 import { ManageDetailCadreComponent } from './manage-detail-cadre/manage-detail-cadre.component';
 import { MaterialComponentComponent } from './material-component/material-component.component';
 import { ManageCommuneComponent } from './manage-commune/manage-commune.component';
@@ -13,21 +14,27 @@ export const MaterialRoutes: Routes = [
   {path:'', component:MaterialComponentComponent,
   canActivate:[RouteGuardService],
   data : {
-   expectedRole: ["ROLE_ADMIN"]
+   expectedRole: ["ROLE_SUPER_ADMIN","ROLE_ADMIN"]
   }
  },
   {path:'cadres', component:ManagePatientComponent,
     canActivate:[RouteGuardService],
     data : {
-     expectedRole: ["ROLE_ADMIN"]
+     expectedRole: ["ROLE_SUPER_ADMIN","ROLE_ADMIN"]
     }
    },
    {path:'cadres/:id', component:ManageDetailCadreComponent,
    canActivate:[RouteGuardService],
    data : {
-    expectedRole: ["ROLE_ADMIN"]
+    expectedRole: ["ROLE_SUPER_ADMIN","ROLE_ADMIN"]
    }
   },
+  {path:'users', component:ManageUsersComponent,
+    canActivate:[RouteGuardService],
+    data : {
+     expectedRole: ["ROLE_SUPER_ADMIN","ROLE_ADMIN"]
+    }
+   },
 
    {path:'regions', component:ManageLocaliteComponent,
     canActivate:[RouteGuardService],

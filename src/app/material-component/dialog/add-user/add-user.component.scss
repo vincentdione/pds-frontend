@@ -1,0 +1,85 @@
+
+.mat-toolbar {
+  margin : -24px;
+  width: auto;
+  margin-bottom: 10px;
+  background-color: var(--primary-color);
+
+}
+
+.title-center {
+   flex: 1 1 auto;
+   text-align: center;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.btnRadio {
+  display: flex;
+  flex-direction: row;
+  margin: 15px 0;
+  align-items: flex-start;
+}
+
+.image-preview {
+  display: flex;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.image-preview img {
+  max-width: 100px;
+  max-height: 100px;
+  margin-right: 16px;
+}
+
+.image-preview button {
+  margin-left: auto;
+}
+
+
+.grid-item {
+  width: 100%;
+}
+
+.mat-grid-list {
+  width: 100%;
+}
+
+::ng-deep {
+  .mat-form-field-appearance-fill .mat-focused .mat-form-field-fill .mat-form-field-label {
+     border-bottom: var(--primary-color);
+
+  }
+  mat-form-field {
+     .mat-hint, input, ::placeholder, .mat-form-field-label  {
+      border-bottom: var(--primary-color);
+     }
+  }
+}
+
+.btn{
+  background-color : var(--primary-color);
+  color : var(--secondary-color);
+  width: 100%;
+}
+
+.danger{
+  background-color : crimson;
+  color : var(--secondary-color);
+  width: 100%;
+}
+
+
+
+.full-width {
+  width: 100%;
+}
+
+.grid-item.full-width {
+  grid-column: 1 / -1; /* Utilisez cette règle pour étendre sur toutes les colonnes */
+}

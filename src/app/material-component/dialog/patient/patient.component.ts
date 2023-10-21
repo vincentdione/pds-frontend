@@ -23,6 +23,8 @@ export class PatientComponent implements OnInit {
   imagePreviewUrl: string | ArrayBuffer | null = null;
   langues: string[] = [];
 
+  selectedFile!: File;
+
 
   constructor(@Inject(MAT_DIALOG_DATA) public dialogData: any,
   private formBuilder : FormBuilder,
@@ -48,6 +50,7 @@ export class PatientComponent implements OnInit {
       telephoneFixe: [''],
       whatsapp: [''],
       email: ['', [Validators.required, Validators.email]],
+      url: ['', [Validators.required]],
       image: ['']
     });
 
@@ -96,10 +99,6 @@ export class PatientComponent implements OnInit {
     if(this.dialogData.action === "Modifier"){
       this.dialogAction = "Modifier"
       this.action = "Modifier"
-      console.log("=========================================== this.dialogData =================================================================")
-      console.log(this.dialogData.data)
-      console.log(this.dialogData)
-      console.log("=========================================== this.dialogData =================================================================")
       this.identificationForm.patchValue(this.dialogData.data)
       this.situationMilitanteForm.patchValue(this.dialogData.data)
       this.situationProfForm.patchValue(this.dialogData.data)
@@ -144,6 +143,7 @@ export class PatientComponent implements OnInit {
   // Handle the error or log it as appropriate.
 }
 
+
     var data = {
 
       identification: {
@@ -155,7 +155,8 @@ export class PatientComponent implements OnInit {
         telephoneFixe: identificationFormData.telephoneFixe,
         whatsapp: identificationFormData.whatsapp,
         email: identificationFormData.email,
-        image: identificationFormData.image
+        image: identificationFormData.image,
+        url: identificationFormData.url
       },
       situationMilitante: {
         adhesionPds: situationMilitanteFormData.adhesionPds,
@@ -197,12 +198,7 @@ export class PatientComponent implements OnInit {
       }
 
     };
-
-    console.log("------------------------------------------------")
-    console.log("data "+JSON.stringify(data));
-    console.log("------------------------------------------------")
-
-    this.patientService.addCadre(data).subscribe(
+    this.patientService.addCadre(data,this.selectedFile).subscribe(
       (res: any) => {
         this.dialogRef.close();
         this.onAddPatient.emit();
@@ -278,7 +274,8 @@ export class PatientComponent implements OnInit {
         telephoneFixe: formData.telephoneFixe,
         whatsapp: formData.whatsapp,
         email: formData.email,
-        image: formData.image
+        image: formData.image,
+        url: formData.url
       },
       situationMilitante: {
         adhesionPds: situationMilitanteFormData.adhesionPds,
@@ -321,9 +318,7 @@ export class PatientComponent implements OnInit {
     }
 
 
-
-
-    this.patientService.updateCadre(data).subscribe((res:any)=>{
+    this.patientService.updateCadre(data.id,data).subscribe((res:any)=>{
        this.dialogRef.close()
        this.onUpdatePatient.emit();
        this.responseMessage = res.message
@@ -351,23 +346,39 @@ export class PatientComponent implements OnInit {
 
 
   onSubmitClick(stepper:any) {
-    if (stepper.selectedIndex === 0 && this.identificationForm.valid) {
-      stepper.next();
-    } else if (stepper.selectedIndex === 1 && this.situationMilitanteForm.valid) {
-      // Effectuer les actions nécessaires avec les données du formulaire
-      stepper.next();
+    if(this.dialogAction == 'Modifier'){
+      if (stepper.selectedIndex === 0 && this.identificationForm.valid) {
+        stepper.next();
+      } else if (stepper.selectedIndex === 1 && this.situationMilitanteForm.valid) {
+        // Effectuer les actions nécessaires avec les données du formulaire
+        stepper.next();
+      }
+      else if (stepper.selectedIndex === 2 && this.situationProfForm.valid) {
+        // Effectuer les actions nécessaires avec les données du formulaire
+        this.edit()
+        this.dialogRef.close();
+      }
     }
-    else if (stepper.selectedIndex === 2 && this.situationProfForm.valid) {
-      // Effectuer les actions nécessaires avec les données du formulaire
-      this.add()
-      this.dialogRef.close();
+    else {
+      if (stepper.selectedIndex === 0 && this.identificationForm.valid) {
+        stepper.next();
+      } else if (stepper.selectedIndex === 1 && this.situationMilitanteForm.valid) {
+        // Effectuer les actions nécessaires avec les données du formulaire
+        stepper.next();
+      }
+      else if (stepper.selectedIndex === 2 && this.situationProfForm.valid) {
+        // Effectuer les actions nécessaires avec les données du formulaire
+        this.add()
+        this.dialogRef.close();
+      }
     }
+
   }
 
   onFileChange(event: any) {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
-
+      this.selectedFile = event.target.files[0]
       // Afficher un aperçu de l'image
       const reader = new FileReader();
       reader.onload = (e: any) => {
@@ -376,13 +387,14 @@ export class PatientComponent implements OnInit {
       reader.readAsDataURL(file);
 
       // Mettre à jour la valeur du champ 'image' dans le formulaire
-      this.identificationForm.get('image')?.setValue(file);
+      this.identificationForm.get('image')?.setValue(file.name); // Or use file content depending on your use case
     } else {
       // Réinitialiser l'aperçu de l'image si aucun fichier n'est sélectionné
       this.imagePreviewUrl = null;
       this.identificationForm.get('image')?.setValue(null);
     }
   }
+
 
 
 

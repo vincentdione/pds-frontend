@@ -203,7 +203,7 @@ export class DetailCadreComponent implements OnInit {
 
 
 
-    this.patientService.updateCadre(data).subscribe((res:any)=>{
+    this.patientService.updateCadre(data.id,data).subscribe((res:any)=>{
        this.dialogRef.close()
        this.onUpdatePatient.emit();
        this.responseMessage = res.message

@@ -21,7 +21,7 @@ import { MatPaginator } from '@angular/material/paginator';
 })
 export class ManagePatientComponent implements OnInit {
 
-  displayColumns : string [] = ["nom","prenom","email","telephone","action"];
+  displayColumns : string [] = ["matricule","nom","prenom","email","telephone","action"];
   dataSource:any;
   regions:any;
   responseMessage : any;

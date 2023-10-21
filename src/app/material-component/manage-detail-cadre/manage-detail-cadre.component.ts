@@ -1,5 +1,6 @@
+import { Observable } from 'rxjs';
 import { PatientService } from './../../services/patient.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 
 @Component({
@@ -13,6 +14,12 @@ export class ManageDetailCadreComponent implements OnInit {
 
 
   constructor(private route: ActivatedRoute,private router: Router,private cadreService:PatientService) { }
+
+  selectedFile!: File;
+
+  @ViewChild('fileInput',{static:false})
+  fileInput!: ElementRef
+
 
   ngOnInit(): void {
 
@@ -30,6 +37,37 @@ export class ManageDetailCadreComponent implements OnInit {
         console.log('Else :');
       }
     });
+  }
+
+  onFileSelected(event:any): void {
+    const files: FileList = event.target.files;
+    if (files.length > 0) {
+      const file: File = files[0];
+      // Gérer le fichier sélectionné comme vous le souhaitez
+      console.log('Fichier sélectionné:', file);
+    }
+  }
+
+  triggerFileInput(): void {
+    const fileInput: HTMLElement | null = document.getElementById('fileInput');
+    if (fileInput) {
+      fileInput.click(); // Déclencher le clic sur l'input de type fichier
+    }
+  }
+
+  onUpload(): void {
+   const imageBlob = this.fileInput.nativeElement.files[0]
+   const file = new FormData()
+   file.set('file',imageBlob)
+
+   this.cadreService.uploadImages(this.cadre.id).subscribe((res:any)=>{
+     console.log(res)
+   })
+
+  }
+
+  ajouterPhoto(){
+
   }
 
 }

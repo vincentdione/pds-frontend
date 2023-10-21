@@ -16,6 +16,8 @@ export class ChangePasswordComponent implements OnInit {
 
   changePasswordForm : any = FormGroup
   responseMessage : any ;
+  userId : any ;
+  user : any ;
 
   constructor(private formBuilder : FormBuilder,private router: Router,
     private userService : UserService,
@@ -29,6 +31,10 @@ export class ChangePasswordComponent implements OnInit {
       newPassword : [null,[Validators.required]],
       confirmPassword : [null,[Validators.required]],
     })
+
+    this.user = localStorage.getItem('userId')
+    const userObject = JSON.parse(this.user);
+    this.userId = userObject.id;
   }
 
   validateSubmit(){
@@ -43,12 +49,12 @@ export class ChangePasswordComponent implements OnInit {
     this.ngxService.start();
     var formData = this.changePasswordForm.value;
     var data = {
-      olPassword : formData.olPassword,
+      oldPassword : formData.oldPassword,
       newPassword : formData.newPassword,
       confirmPassword : formData.confirmPassword,
     }
 
-    this.userService.changePassword(data).subscribe((res:any) => {
+    this.userService.changePassword(this.userId,data).subscribe((res:any) => {
       this.ngxService.stop();
       this.dialogRef.close();
       console.log(res)

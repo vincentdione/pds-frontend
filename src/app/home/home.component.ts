@@ -73,13 +73,15 @@ export class HomeComponent implements OnInit {
 
     this.userService.login(data).subscribe((res:any) => {
         this.ngxService.stop();
-        localStorage.setItem("token",JSON.stringify(res?.token))
-        localStorage.setItem("role",JSON.stringify(res?.role[0]))
-        console.log(res?.token)
-        console.log(res?.role[0])
-        this.responseMessage = res?.message
-        this.snackbarService.openSnackbar(this.responseMessage,"")
-        this.router.navigate(["/workspace/dashboard"])
+          console.log(res)
+          localStorage.setItem("token",JSON.stringify(res?.token))
+          localStorage.setItem("role",JSON.stringify(res?.role[0]))
+          localStorage.setItem("userId",JSON.stringify(res?.user))
+          console.log(res?.token)
+          console.log(res?.role[0])
+          this.responseMessage = res?.message
+          this.snackbarService.openSnackbar(this.responseMessage,"")
+          this.router.navigate(["/workspace/dashboard"])
 
     },(error)=>{
       this.ngxService.stop();
@@ -89,7 +91,7 @@ export class HomeComponent implements OnInit {
       else {
         this.responseMessage = GlobalConstants.genericErrorMessage
       }
-      this.snackbarService.openSnackbar(this.responseMessage,GlobalConstants.error)
+      this.snackbarService.openSnackbar("Utilisateur ou mot de passe incorrect !",GlobalConstants.error)
     })
 
   }

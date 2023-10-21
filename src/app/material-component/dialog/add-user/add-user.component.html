@@ -1,0 +1,100 @@
+
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <span class="title-center">{{dialogData.action}} Utlisateur </span>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<form [formGroup]="userForm" enctype="multipart/form-data">
+  <div class="grid-container">
+    <div class="grid-item">
+      <mat-form-field>
+        <mat-label>Nom</mat-label>
+        <input matInput formControlName="nom" required>
+        <mat-error *ngIf="userForm.controls.nom.touched && userForm.controls.nom.invalid">
+          <span *ngIf="userForm.controls.nom.errors.required" >This field is mandatory</span>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="grid-item">
+      <mat-form-field>
+        <mat-label>Prénom</mat-label>
+        <input matInput formControlName="prenom" required>
+        <mat-error *ngIf="userForm.controls.prenom.touched && userForm.controls.prenom.invalid">
+          <span *ngIf="userForm.controls.prenom.errors.required" >This field is mandatory</span>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="grid-item">
+      <mat-form-field>
+        <mat-label>Username</mat-label>
+        <input matInput formControlName="username" required>
+        <mat-error *ngIf="userForm.controls.username.touched && userForm.controls.username.invalid">
+          <span *ngIf="userForm.controls.username.errors.required" >This field is mandatory</span>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="grid-item">
+      <mat-form-field>
+        <mat-label>Telephone</mat-label>
+        <input matInput formControlName="telephone" required>
+        <mat-error *ngIf="userForm.controls.telephone.touched && userForm.controls.telephone.invalid">
+          <span *ngIf="userForm.controls.telephone.errors.required" >This field is mandatory</span>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="grid-item full-width">
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" required>
+        <mat-error *ngIf="userForm.controls.email.touched && userForm.controls.email.invalid">
+          <span *ngIf="userForm.controls.email.errors.required" >This field is mandatory</span>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+
+
+
+    <div class="grid-item" *ngIf="dialogAction === 'Ajouter'">
+      <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input matInput formControlName="password" required>
+        <mat-error *ngIf="userForm.controls.password.touched && userForm.controls.password.invalid">
+          <span *ngIf="userForm.controls.password.errors.required" >This field is mandatory</span>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="grid-item"  [class.full-width]="dialogAction === 'Modifier'">
+      <mat-form-field>
+        <mat-label>Role</mat-label>
+        <mat-select formControlName="role" required>
+<!--           <mat-option value="SUPER_ADMIN">SUPER_ADMIN</mat-option>
+ -->          <mat-option value="ADMIN">ADMIN</mat-option>
+        </mat-select>
+        <mat-error *ngIf="userForm.controls.role.touched && userForm.controls.role.invalid">
+          <span *ngIf="userForm.controls.role.errors.required">This field is mandatory</span>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="grid-item" *ngIf="dialogData.action == 'Modifier'">
+      <button mat-raised-button class="btn" type="submit" (click)="onEditUser()">Modifier</button>
+    </div>
+
+    <div class="grid-item" *ngIf="dialogData.action == 'Ajouter'">
+      <button mat-raised-button class="btn" type="submit" (click)="onAddNewUser()"
+        [disabled]="!(userForm.dirty && userForm.valid)">Ajouter</button>
+    </div>
+
+    <div class="grid-item">
+      <button mat-raised-button class="danger" mat-dialog-close>Fermer</button>
+    </div>
+
+  </div>
+</form>

@@ -7,8 +7,22 @@
       <mat-card>
       <div class="identification">
         <div class="profile-image flex-1">
-          <img [src]="cadre.image" alt="Image de profil" class="circular-image">
+          <div class="wrapperImg" (click)="triggerFileInput()">
+            <!-- Affichage de l'image de profil -->
+            <img [src]="cadre.img || '../../../assets/img/profil.png'" alt="Image de profil" class="circular-image">
+
+            <!-- Bouton pour ajouter une photo -->
+            <label for="fileInput">
+              <button mat-icon-button>
+                <mat-icon>add_a_photo</mat-icon>
+              </button>
+            </label>
+
+            <!-- Input de type fichier invisible -->
+            <input type="file" id="fileInput" style="display: none" (change)="onUpload()">
+          </div>
         </div>
+
         <div class="profile-info">
           <mat-card class="cardDetails">
             <mat-card-header>
@@ -43,6 +57,10 @@
                 <mat-icon class="info-icon">email</mat-icon>
                 <p style="font-size: 18px">Email : {{ cadre.email }}</p>
               </div>
+              <div class="info-section">
+                <mat-icon class="info-icon">url</mat-icon>
+                <p style="font-size: 18px">Url : {{ cadre?.url }}</p>
+              </div>
             </mat-card-content>
           </mat-card>
         </div>
@@ -75,7 +93,7 @@
               <ul>
                 <li *ngFor="let langue of cadre.languesEcrites">{{ langue }}</li>
               </ul>
-              <p>Autres : {{ cadre.autres }}</p>
+              <p style="font-size: 18px">Autres : {{ cadre.autres }}</p>
             </div>
           </mat-card>
         </div>
@@ -87,21 +105,21 @@
             <p style="font-size: 18px">Année de la carte : {{ cadre.anneeCarte }}</p>
             <p style="font-size: 18px">Numéro de carte : {{ cadre.numeroCarte }}</p>
             <p style="font-size: 18px">Fonctions au parti : {{ cadre.fonctionsParti }}</p>
-            <p>Numéro CIN : {{ cadre.numeroCIN }}</p>
-            <p>Date de délivrance de la CIN : {{ cadre.dateDelivranceCIN | date: 'dd/MM/yyyy' }}</p>
-            <p>Date d'expiration de la CIN : {{ cadre.dateExpirationCIN | date: 'dd/MM/yyyy' }}</p>
-            <p>Numéro de carte électeur : {{ cadre.numeroCarteElecteur }}</p>
-            <p>Centre de vote : {{ cadre.centreVote }}</p>
-            <p>Fédération : {{ cadre.federation }}</p>
-            <p>Section : {{ cadre.section }}</p>
-            <p>Secteur : {{ cadre.secteur }}</p>
-            <p>Mouvement de soutien : {{ cadre.mouvementSoutien }}</p>
-            <p>Région : {{ cadre.region }}</p>
-            <p>Commune : {{ cadre.commune }}</p>
-            <p>Départ : {{ cadre.depart }}</p>
-            <p>Village : {{ cadre.village }}</p>
-            <p>Numéro de centre de vote : {{ cadre.numeroCentreVote }}</p>
-            <p>Numéro de bureau de vote : {{ cadre.numeroBureauVote }}</p>
+            <p style="font-size: 18px">Numéro CIN : {{ cadre.numeroCIN }}</p>
+            <p style="font-size: 18px">Date de délivrance de la CIN : {{ cadre.dateDelivranceCIN | date: 'dd/MM/yyyy' }}</p>
+            <p style="font-size: 18px">Date d'expiration de la CIN : {{ cadre.dateExpirationCIN | date: 'dd/MM/yyyy' }}</p>
+            <p style="font-size: 18px">Numéro de carte électeur : {{ cadre.numeroCarteElecteur }}</p>
+            <p style="font-size: 18px">Centre de vote : {{ cadre.centreVote }}</p>
+            <p style="font-size: 18px">Fédération : {{ cadre.federation }}</p>
+            <p style="font-size: 18px">Section : {{ cadre.section }}</p>
+            <p style="font-size: 18px">Secteur : {{ cadre.secteur }}</p>
+            <p style="font-size: 18px">Mouvement de soutien : {{ cadre.mouvementSoutien }}</p>
+            <p style="font-size: 18px">Région : {{ cadre.region }}</p>
+            <p style="font-size: 18px">Commune : {{ cadre.commune }}</p>
+            <p style="font-size: 18px">Départ : {{ cadre.depart }}</p>
+            <p style="font-size: 18px">Village : {{ cadre.village }}</p>
+            <p style="font-size: 18px">Numéro de centre de vote : {{ cadre.numeroCentreVote }}</p>
+            <p style="font-size: 18px">Numéro de bureau de vote : {{ cadre.numeroBureauVote }}</p>
           </mat-card>
         </div>
       </div>

@@ -28,6 +28,12 @@ export class UserService {
 
   }
 
+  register(data:any){
+    return this.httpClient.post(this.url+"/auth/register", data,{
+      headers: new HttpHeaders().set('Content-Type', 'application/json')
+    })
+  }
+
   login(data:any){
 
     return this.httpClient.post(this.url+"/auth/login", data,{
@@ -36,6 +42,17 @@ export class UserService {
 
   }
 
+  updateUser(id:any,data:any){
+    return this.httpClient.patch(this.url+"/auth/update/"+id, data,{
+      headers: new HttpHeaders().set( 'Content-Type','application/json')
+    })
+  }
+
+  deleteUser(id:any){
+    return this.httpClient.delete(this.url+"/auth/remove/"+id,{
+      headers: new HttpHeaders().set( 'Content-Type','application/json')
+    })
+  }
 
 
   checkToken(){
@@ -43,8 +60,8 @@ export class UserService {
     return this.httpClient.get(this.url+"/auth/checkToken");
   }
 
-  changePassword(data:any){
-    return this.httpClient.post(this.url+"/auth/changePassword", data,{
+  changePassword(id:any,data:any){
+    return this.httpClient.patch(`${this.url}/auth/changeMdp/${id}`, data,{
       headers: new HttpHeaders().set('Content-Type', 'application/json')
     })
   }
@@ -60,6 +77,17 @@ export class UserService {
     });
     return this.httpClient.get(this.url+"/auth/checkToken",{headers:headers})
    }
+
+
+   blockedUser(id: any,row:any){
+    return this.httpClient.patch(`${this.url}/users/isactive/${id}`,row)
+ }
+
+
+ unBlockedUser(id: any,row:any){
+  return this.httpClient.patch(`${this.url}/users/isnotactive/${id}`,row)
+}
+
 
 
 }

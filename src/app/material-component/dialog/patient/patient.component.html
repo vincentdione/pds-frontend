@@ -94,6 +94,26 @@
           </mat-error>
         </mat-form-field>
       </div>
+
+      <div class="grid-item">
+        <mat-form-field>
+          <mat-label>Url</mat-label>
+          <input matInput formControlName="url" required>
+          <mat-error *ngIf="identificationForm.controls.url.touched && identificationForm.controls.url.invalid">
+            <span *ngIf="identificationForm.controls.url.errors.required" >This field is mandatory</span>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <mat-label>Image </mat-label>
+      <input  type="file" formControlName="image" (change)="onFileChange($event)">
+      <img *ngIf="imagePreviewUrl" [src]="imagePreviewUrl" alt="Aperçu de l'image" width="150">
+      <mat-error *ngIf="identificationForm.controls.image.touched && identificationForm.controls.image.invalid">
+        <span *ngIf="identificationForm.controls.image.errors.required" >This field is mandatory</span>
+      </mat-error>
+
+
+
         </div>
 
     <!--     <div>
@@ -107,12 +127,7 @@
           </button>
         </div> -->
 
-          <mat-label>Image </mat-label>
-        <input  type="file" formControlName="image" (change)="onFileChange($event)">
-        <img *ngIf="imagePreviewUrl" [src]="imagePreviewUrl" alt="Aperçu de l'image" width="150">
-        <mat-error *ngIf="identificationForm.controls.image.touched && identificationForm.controls.image.invalid">
-          <span *ngIf="identificationForm.controls.image.errors.required" >This field is mandatory</span>
-        </mat-error>
+
 
 
       </form>

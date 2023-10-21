@@ -88,10 +88,14 @@
 <hr>
 <div class="responsive_table">
    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-       <ng-container matColumnDef="nom">
-        <th mat-header-cell *matHeaderCellDef>Nom</th>
-        <td mat-cell *matCellDef="let element">{{element.nom}}</td>
-       </ng-container>
+    <ng-container matColumnDef="matricule">
+      <th mat-header-cell *matHeaderCellDef>Matricule</th>
+      <td mat-cell *matCellDef="let element">{{element.matricule}}</td>
+     </ng-container>
+     <ng-container matColumnDef="nom">
+      <th mat-header-cell *matHeaderCellDef>Nom</th>
+      <td mat-cell *matCellDef="let element">{{element.nom}}</td>
+     </ng-container>
        <ng-container matColumnDef="prenom">
         <th mat-header-cell *matHeaderCellDef>Prenom</th>
         <td mat-cell *matCellDef="let element">{{element.prenom}}</td>
