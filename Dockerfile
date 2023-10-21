@@ -12,7 +12,7 @@
 #CMD ["sh","-c","npm start"]
 
 
-FROM node as DEV
+FROM node:14-alpine
 ENV  NODE_ENV = dev
 
 WORKDIR /client
