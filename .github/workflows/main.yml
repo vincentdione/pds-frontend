@@ -52,6 +52,11 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 14.20
+          
+      - name: Set up node using nvm
+        uses: dcodeIO/setup-node-nvm@v5
+        with:
+          node-version: 14.20
         
       - name: SSH into the server and deploy
         uses: appleboy/ssh-action@master
@@ -66,7 +71,7 @@ jobs:
             git pull origin main
             npm install
             npm audit fix --force
-            ng build --prod
+            npm build --prod
             service nginx stop
             cp -R dist/Frontend/*  /var/www/cadres/client/*
             service nginx start
