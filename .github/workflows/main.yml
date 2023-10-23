@@ -53,8 +53,11 @@ jobs:
           script: |
             cd /home/k24/fncl-frontend
             git pull origin main
+            echo "********************"
             nvm use 14.20
+            echo "********************"
             npm install
+            npm audit fix --force
             ng build --prod
             service nginx stop
             cp -R dist/Frontend/*  /var/www/cadres/client/*
