@@ -51,7 +51,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PASSWORD }}
           script: |
-            cd /home/k24/pds-frontend
+            cd /home/k24/fncl-frontend
             git pull origin main
             npm install
             ng build --prod
