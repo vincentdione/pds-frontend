@@ -43,10 +43,10 @@ jobs:
       - name: Setup SSH key
         run: echo "$SSH_PASSWORD"
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: 14.20.1
+      # - name: Set up Node.js
+      #   uses: actions/setup-node@v2
+      #   with:
+      #     node-version: 14.20.1
         
       - name: SSH into the server and deploy
         uses: appleboy/ssh-action@master
@@ -58,7 +58,7 @@ jobs:
           script: |
             cd /home/k24/fncl-frontend
             source ~/.nvm/nvm.sh
-            nvm use 14
+            nvm use 16
             git pull origin main 
             npm install
             npm run build
