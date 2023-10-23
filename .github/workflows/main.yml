@@ -47,12 +47,6 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 14.20
-          
-      - name: Install Dependencies
-        run: npm install
-
-      - name: Build Angular App
-        run: npm run build
         
       - name: SSH into the server and deploy
         uses: appleboy/ssh-action@master
