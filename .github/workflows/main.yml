@@ -58,6 +58,7 @@ jobs:
           script: |
             cd /home/k24/fncl-frontend
             source ~/.nvm/nvm.sh
+            nvm use 14
             git pull origin main 
             npm install
             npm run build
