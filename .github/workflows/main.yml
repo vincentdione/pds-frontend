@@ -53,6 +53,7 @@ jobs:
           script: |
             cd /home/k24/fncl-frontend
             git pull origin main
+            nvm use 14.20
             npm install
             ng build --prod
             service nginx stop
