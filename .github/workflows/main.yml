@@ -58,7 +58,7 @@ jobs:
           script: |
             cd /home/k24/fncl-frontend
             source ~/.nvm/nvm.sh
-            git pull origin main
+            git pull origin main 
             npm install
             npm run build
             cp -r dist/Frontend/*  /var/www/cadres/client/*
