@@ -60,6 +60,8 @@ jobs:
             git pull origin main
             echo "********************"
             nvm use 14.20
+            node -v
+            npm -v
             echo "********************"
             npm install
             npm audit fix --force
