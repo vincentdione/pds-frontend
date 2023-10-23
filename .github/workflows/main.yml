@@ -57,6 +57,7 @@ jobs:
           key: ${{ secrets.SSH_PASSWORD }}
           script: |
             cd /home/k24/fncl-frontend
+            source ~/.nvm/nvm.sh
             git pull origin main
             npm install
             npm run build
