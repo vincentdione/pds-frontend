@@ -46,12 +46,13 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: 16.20
+          node-version: 14.20
           
-      - name: Set up node using nvm
-        uses: dcodeIO/setup-node-nvm@v5
-        with:
-          node-version: 16.20
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build Angular App
+        run: npm run build
         
       - name: SSH into the server and deploy
         uses: appleboy/ssh-action@master
@@ -62,13 +63,9 @@ jobs:
           key: ${{ secrets.SSH_PASSWORD }}
           script: |
             cd /home/k24/fncl-frontend
-            npm install -g @angular/cli
             git pull origin main
-            npm install
-            npm audit fix --force
-            npm run build --prod
-            service nginx stop
-            cp -R dist/Frontend/*  /var/www/cadres/client/*
-            service nginx start
+            cp -r dist/Frontend/*  /var/www/cadres/client/*
+            sudo nginx -t
+            sudo systemctl reload nginx
 
 
