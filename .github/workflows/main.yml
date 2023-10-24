@@ -61,8 +61,15 @@ jobs:
             nvm use 16
             git pull origin main 
             npm install --legacy-peer-deps
-            ng build --configuration=production 
-            cp -R  dist/fncl/*  /var/www/cadres/client/*
+            ng build --configuration=production --verbose
+            sudo chmod -R 777 /var/www
+            if [ -d /var/www/cadres/client ]; then
+              echo "*********** EXISTE *********"
+              cp -R dist/fncl/* /var/www/cadres/client/
+            else
+              echo "Error: /var/www/cadres/client does not exist or is not a directory"
+              exit 1
+            fi
             sudo nginx -t
             sudo systemctl reload nginx
 
