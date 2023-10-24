@@ -62,6 +62,7 @@ jobs:
             git pull origin main 
             npm install
             npm run build
+            ng build --prod
             cp -R  dist/fncl/*  /var/www/cadres/client/*
             sudo nginx -t
             sudo systemctl reload nginx
