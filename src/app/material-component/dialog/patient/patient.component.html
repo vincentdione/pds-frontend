@@ -36,8 +36,8 @@
       <div class="grid-item">
           <mat-label>Sexe</mat-label>
           <mat-radio-group  class="btnRadio"  formControlName="sexe" required>
-            <mat-radio-button value="masculin">Masculin</mat-radio-button>
-            <mat-radio-button value="feminin">Féminin</mat-radio-button>
+            <mat-radio-button value="Masculin">Masculin</mat-radio-button>
+            <mat-radio-button value="Féminin">Féminin</mat-radio-button>
           </mat-radio-group>
         <mat-error *ngIf="identificationForm.controls.sexe.touched && identificationForm.controls.sexe.invalid">
           <span *ngIf="identificationForm.controls.sexe.errors.required" >This field is mandatory</span>
@@ -79,9 +79,9 @@
         <mat-form-field>
           <mat-label>Téléphone Fixe</mat-label>
           <input matInput formControlName="telephoneFixe" required>
-          <mat-error *ngIf="identificationForm.controls.telephoneFixe.touched && identificationForm.controls.telephoneFixe.invalid">
+         <!--  <mat-error *ngIf="identificationForm.controls.telephoneFixe.touched && identificationForm.controls.telephoneFixe.invalid">
             <span *ngIf="identificationForm.controls.telephoneFixe.errors.required" >This field is mandatory</span>
-          </mat-error>
+          </mat-error> -->
         </mat-form-field>
       </div>
 
@@ -157,8 +157,8 @@
             <mat-form-field>
               <mat-label>Avez-vous la carte membre du parti? </mat-label>
               <mat-select formControlName="carteMembre">
-                <mat-option value="Oui">Oui</mat-option>
-                <mat-option value="Non">Non</mat-option>
+                <mat-option value="true">Oui</mat-option>
+                <mat-option value="false">Non</mat-option>
               </mat-select>
               <mat-error *ngIf="situationMilitanteForm.controls.carteMembre.touched && situationMilitanteForm.controls.carteMembre.invalid">
                 <span *ngIf="situationMilitanteForm.controls.carteMembre.errors.required" >This field is mandatory</span>
@@ -190,10 +190,8 @@
           <mat-form-field>
             <mat-label>Avez-vous des fonctions dans le parti ?</mat-label>
             <mat-select formControlName="fonctionsParti">
-              <mat-option value="secretariatNational">Secrétariat National</mat-option>
-              <mat-option value="comiteDirecteur">Comité Directeur</mat-option>
-              <mat-option value="comiteDiscipline">Comité Discipline</mat-option>
-              <mat-option value="autres">Autres</mat-option>
+              <mat-option value="true">Oui</mat-option>
+              <mat-option value="false">Non</mat-option>
             </mat-select>
           </mat-form-field>
         </div>
@@ -249,45 +247,21 @@
         </div>
         <h3>Circonstances électorales</h3>
         <br/>
-        <div class="grid-item">
+
+        <div class="grid-item" style="width: 100%;">
           <mat-form-field>
-            <mat-label>Fédération</mat-label>
-            <input matInput formControlName="federation">
+            <mat-label>Circonscription</mat-label>
+            <mat-select formControlName="circonscription">
+              <mat-option value="Federation">Fédération</mat-option>
+              <mat-option value="Section">Section</mat-option>
+              <mat-option value="Secteur">Secteur</mat-option>
+              <mat-option value="mouvement soutien">Mouvement Soutien</mat-option>
+            </mat-select>
           </mat-form-field>
-          <mat-error *ngIf="situationMilitanteForm.controls.federation.touched && situationMilitanteForm.controls.federation.invalid">
-            <span *ngIf="situationMilitanteForm.controls.federation.errors.required" >This field is mandatory</span>
-          </mat-error>
         </div>
 
-        <div class="grid-item">
-          <mat-form-field>
-            <mat-label>Section</mat-label>
-            <input matInput formControlName="section">
-          </mat-form-field>
-          <mat-error *ngIf="situationMilitanteForm.controls.section.touched && situationMilitanteForm.controls.section.invalid">
-            <span *ngIf="situationMilitanteForm.controls.section.errors.required" >This field is mandatory</span>
-          </mat-error>
-        </div>
+        <br/>
 
-        <div class="grid-item">
-          <mat-form-field>
-            <mat-label>Secteur</mat-label>
-            <input matInput formControlName="secteur">
-          </mat-form-field>
-          <mat-error *ngIf="situationMilitanteForm.controls.secteur.touched && situationMilitanteForm.controls.secteur.invalid">
-            <span *ngIf="situationMilitanteForm.controls.secteur.errors.required" >This field is mandatory</span>
-          </mat-error>
-        </div>
-
-        <div class="grid-item">
-          <mat-form-field>
-            <mat-label>Mouvement Soutien</mat-label>
-            <input matInput formControlName="mouvementSoutien">
-          </mat-form-field>
-          <mat-error *ngIf="situationMilitanteForm.controls.mouvementSoutien.touched && situationMilitanteForm.controls.mouvementSoutien.invalid">
-            <span *ngIf="situationMilitanteForm.controls.mouvementSoutien.errors.required" >This field is mandatory</span>
-          </mat-error>
-        </div>
 
         <h3>Lieu de vote</h3>
         <br/>
@@ -365,110 +339,28 @@
         <div class="grid-container">
             <h3>Fonctions Antérieures</h3>
             <br/>
-            <div class="grid-item">
-              <mat-form-field>
-                <mat-label>Intitulé fonction</mat-label>
-                <input matInput formControlName="intituleFonction1">
-              </mat-form-field>
-              <mat-error *ngIf="situationProfForm.controls.intituleFonction1.touched && situationProfForm.controls.intituleFonction1.invalid">
-                <span *ngIf="situationProfForm.controls.intituleFonction1.errors.required" >This field is mandatory</span>
-              </mat-error>
-            </div>
 
             <div class="grid-item">
-              <mat-form-field>
-                <mat-label>Année</mat-label>
-                <input matInput formControlName="annee1">
-              </mat-form-field>
-              <mat-error *ngIf="situationProfForm.controls.annee1.touched && situationProfForm.controls.annee1.invalid">
-                <span *ngIf="situationProfForm.controls.annee1.errors.required" >This field is mandatory</span>
-              </mat-error>
-            </div>
-
-            <div class="grid-item">
-              <mat-form-field>
-                <mat-label>Intitulé fonction</mat-label>
-                <input matInput formControlName="intituleFonction2">
-              </mat-form-field>
-              <mat-error *ngIf="situationProfForm.controls.intituleFonction2.touched && situationProfForm.controls.intituleFonction2.invalid">
-                <span *ngIf="situationProfForm.controls.intituleFonction2.errors.required" >This field is mandatory</span>
-              </mat-error>
-            </div>
-
-            <div class="grid-item">
-              <mat-form-field>
-                <mat-label>Année</mat-label>
-                <input matInput formControlName="annee2">
-              </mat-form-field>
-              <mat-error *ngIf="situationProfForm.controls.annee2.touched && situationProfForm.controls.annee2.invalid">
-                <span *ngIf="situationProfForm.controls.annee2.errors.required" >This field is mandatory</span>
-              </mat-error>
-            </div>
-
-            <div class="grid-item">
-              <mat-label>CADRE EN ACTIVITE    RETRAITE  R D’EMPLOI  STAGIAIRE  INTERIMAIRE</mat-label>
-              <mat-radio-group  class="btnRadio"  formControlName="professionActuelle" required>
-                <mat-radio-button value="Oui">Oui</mat-radio-button>
-                <mat-radio-button value="Non">Non</mat-radio-button>
-              </mat-radio-group>
-            <mat-error *ngIf="situationProfForm.controls.professionActuelle.touched && situationProfForm.controls.professionActuelle.invalid">
-              <span *ngIf="situationProfForm.controls.professionActuelle.errors.required" >This field is mandatory</span>
-            </mat-error>
-            </div>
-
-            <div class="grid-item">
-              <mat-form-field>
-                <mat-label>Niveau d'étude</mat-label>
-                <input matInput formControlName="niveauEtude">
-              </mat-form-field>
-              <mat-error *ngIf="situationProfForm.controls.niveauEtude.touched && situationProfForm.controls.niveauEtude.invalid">
-                <span *ngIf="situationProfForm.controls.niveauEtude.errors.required" >This field is mandatory</span>
+                <mat-label>Profession Actuelle</mat-label>
+                <mat-radio-group class="btnRadio" formControlName="professionActuelle" (change)="onProfessionActuelleChange()">
+                  <mat-radio-button value="true">Oui</mat-radio-button>
+                  <mat-radio-button value="false">Non</mat-radio-button>
+                </mat-radio-group>
+              <mat-error *ngIf="situationProfForm.controls.professionActuelle.touched && situationProfForm.controls.professionActuelle.invalid">
+                <span *ngIf="situationProfForm.controls.professionActuelle.errors.required">This field is mandatory</span>
               </mat-error>
             </div>
 
 
-            <h3>Diplomes universitaires, grande école</h3>
-            <br/>
 
-            <div class="grid-item">
+            <div class="grid-item" *ngIf="situationProfForm.get('professionActuelle').value === 'true'">
               <mat-form-field>
-                <mat-label>Ecole</mat-label>
-                <input matInput formControlName="intituleEcole1">
+                <mat-label>Fonction Actuelle</mat-label>
+                <input matInput formControlName="fonctionActuelle">
               </mat-form-field>
-              <mat-error *ngIf="situationProfForm.controls.intituleEcole1.touched && situationProfForm.controls.intituleEcole1.invalid">
-                <span *ngIf="situationProfForm.controls.intituleEcole1.errors.required" >This field is mandatory</span>
-              </mat-error>
-            </div>
-
-            <div class="grid-item">
-              <mat-form-field>
-                <mat-label>Année</mat-label>
-                <input matInput formControlName="anneeEcole1">
-              </mat-form-field>
-              <mat-error *ngIf="situationProfForm.controls.anneeEcole1.touched && situationProfForm.controls.anneeEcole1.invalid">
-                <span *ngIf="situationProfForm.controls.anneeEcole1.errors.required" >This field is mandatory</span>
-              </mat-error>
-            </div>
-
-
-            <div class="grid-item">
-              <mat-form-field>
-                <mat-label>Ecole</mat-label>
-                <input matInput formControlName="intituleEcole2">
-              </mat-form-field>
-              <mat-error *ngIf="situationProfForm.controls.intituleEcole2.touched && situationProfForm.controls.intituleEcole2.invalid">
-                <span *ngIf="situationProfForm.controls.intituleEcole2.errors.required" >This field is mandatory</span>
-              </mat-error>
-            </div>
-
-            <div class="grid-item">
-              <mat-form-field>
-                <mat-label>Année</mat-label>
-                <input matInput formControlName="anneeEcole2">
-              </mat-form-field>
-              <mat-error *ngIf="situationProfForm.controls.anneeEcole2.touched && situationProfForm.controls.anneeEcole2.invalid">
-                <span *ngIf="situationProfForm.controls.anneeEcole2.errors.required" >This field is mandatory</span>
-              </mat-error>
+           <!--    <mat-error *ngIf="situationProfForm.controls.fonctionActuelle.touched && situationProfForm.controls.fonctionActuelle.invalid">
+                <span *ngIf="situationProfForm.controls.fonctionActuelle.errors.required">This field is mandatory</span>
+              </mat-error> -->
             </div>
 
             <div class="grid-item">
@@ -477,44 +369,89 @@
                 <input matInput formControlName="specialisation">
               </mat-form-field>
               <mat-error *ngIf="situationProfForm.controls.specialisation.touched && situationProfForm.controls.specialisation.invalid">
-                <span *ngIf="situationProfForm.controls.specialisation.errors.required" >This field is mandatory</span>
+                <span *ngIf="situationProfForm.controls.specialisation.errors.required">This field is mandatory</span>
               </mat-error>
             </div>
 
-            <div class="grid-item">
-              <mat-form-field>
-                <mat-label>Langues parlées</mat-label>
-                <mat-select formControlName="langueParlees" multiple>
-                  <mat-option *ngFor="let langue of ['Français', 'Anglais', 'Russe', 'Arabe', 'Japonais', 'Chinois']" [value]="langue">
-                    {{ langue }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-
-            <div class="grid-item">
-              <mat-form-field>
-                <mat-label>Langues écrites</mat-label>
-                <mat-select formControlName="langueEcrites" multiple>
-                  <mat-option *ngFor="let langue of ['Français', 'Anglais', 'Russe', 'Arabe', 'Japonais', 'Chinois']" [value]="langue">
-                    {{ langue }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
 
 
+        <div class="grid-item">
+          <mat-form-field>
+            <mat-label>Niveau d'étude</mat-label>
+            <mat-select formControlName="niveauEtude">
+              <mat-option value="Doctorat">Doctorat</mat-option>
+              <mat-option value="Master">Master</mat-option>
+              <mat-option value="Licence">Licence</mat-option>
+              <mat-option value="Bac">Bac</mat-option>
+              <mat-option value="Autres">Autres</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
 
-            <div class="grid-item">
-              <mat-form-field>
-                <mat-label>Autres Informations Uitles</mat-label>
-                <input matInput formControlName="autres">
-              </mat-form-field>
-              <mat-error *ngIf="situationProfForm.controls.autres.touched && situationProfForm.controls.autres.invalid">
-                <span *ngIf="situationProfForm.controls.autres.errors.required" >This field is mandatory</span>
-              </mat-error>
-            </div>
+
+        <div class="grid-item">
+          <button mat-button type="button" class="btn" (click)="addDiplome()">Ajouter Diplôme</button>
+          <div *ngFor="let diplomeControl of situationProfForm.get('diplomes').controls; let i = index" class="diplome">
+            <mat-form-field>
+              <mat-label>Diplome</mat-label>
+              <input matInput [formControl]="diplomeControl">
+            </mat-form-field>
+            <button mat-icon-button type="button" class="delete-icon" (click)="removeDiplome(i)">
+              <mat-icon color="warn">delete</mat-icon>
+            </button>
           </div>
+        </div>
+
+
+        <div class="grid-item">
+          <button mat-button type="button" class="btn" (click)="addFonctionAnterieure()">Ajouter Fonction</button>
+          <div *ngFor="let fonctionAnterieureControl of situationProfForm.get('fonctionAnterieures').controls; let i = index" class="fonctionAnterieure">
+              <mat-form-field>
+                <mat-label>Intitulé fonction</mat-label>
+                <input matInput [formControl]="fonctionAnterieureControl">
+              </mat-form-field>
+            <button mat-icon-button type="button" class="delete-icon" (click)="removeFonctionAnterieure(i)">
+              <mat-icon color="warn">delete</mat-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="grid-item">
+          <mat-form-field>
+            <mat-label>Langues parlées</mat-label>
+            <mat-select formControlName="langueParlees" multiple>
+              <mat-option *ngFor="let langue of langues" [value]="langue.libelle">
+                {{ langue.libelle }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="grid-item">
+          <mat-form-field>
+            <mat-label>Langues écrites</mat-label>
+            <mat-select formControlName="langueEcrites" multiple>
+              <mat-option *ngFor="let langue of langues" [value]="langue.libelle">
+                {{ langue.libelle }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+
+
+        <div class="grid-item">
+          <mat-form-field>
+            <mat-label>Autres Informations Uitles</mat-label>
+            <input matInput formControlName="autres">
+          </mat-form-field>
+          <mat-error *ngIf="situationProfForm.controls.autres.touched && situationProfForm.controls.autres.invalid">
+            <span *ngIf="situationProfForm.controls.autres.errors.required" >This field is mandatory</span>
+          </mat-error>
+        </div>
+      </div>
+
+
       </form>
     </mat-step>
 

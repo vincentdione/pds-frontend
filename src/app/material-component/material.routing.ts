@@ -1,3 +1,5 @@
+import { ManageLangueComponent } from './manage-langue/manage-langue.component';
+import { AddLangueComponent } from './dialog/add-langue/add-langue.component';
 import { ManageUsersComponent } from './manage-users/manage-users.component';
 import { ManageDetailCadreComponent } from './manage-detail-cadre/manage-detail-cadre.component';
 import { MaterialComponentComponent } from './material-component/material-component.component';
@@ -54,5 +56,11 @@ export const MaterialRoutes: Routes = [
    expectedRole: ["ROLE_ADMIN"]
   }
  },
+ {path:'langues', component:ManageLangueComponent,
+ canActivate:[RouteGuardService],
+ data : {
+  expectedRole: ["ROLE_ADMIN"]
+ }
+},
 
 ];

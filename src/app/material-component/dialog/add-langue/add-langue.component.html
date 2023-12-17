@@ -1,0 +1,46 @@
+
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <span class="title-center">{{dialogData.action}} Langue </span>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<form [formGroup]="langueForm" enctype="multipart/form-data">
+  <div class="grid-container">
+
+
+    <div class="grid-item">
+      <mat-form-field>
+        <mat-label>Libelle</mat-label>
+        <input matInput formControlName="libelle" required>
+        <mat-error *ngIf="langueForm.controls.libelle.touched && langueForm.controls.libelle.invalid">
+          <span *ngIf="langueForm.controls.libelle.errors.required" >This field is mandatory</span>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="grid-item">
+      <mat-form-field>
+        <mat-label>Code</mat-label>
+        <input matInput formControlName="code" required>
+        <mat-error *ngIf="langueForm.controls.code.touched && langueForm.controls.code.invalid">
+          <span *ngIf="langueForm.controls.code.errors.required" >This field is mandatory</span>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+
+  <div class="wrapper">
+    <div class="grid-item"  *ngIf="dialogData.action === 'Ajouter'">
+      <button mat-raised-button class="btn" type="submit" (click)="onAddNewLangue()">{{dialogData.action}}</button>
+    </div>
+    <div class="grid-item" *ngIf="dialogData.action === 'Modifier'">
+      <button mat-raised-button class="btn" type="submit" (click)="onEditLangue()">{{dialogData.action}}</button>
+    </div>
+    <div class="grid-item">
+      <button mat-raised-button class="danger" mat-dialog-close>Fermer</button>
+    </div>
+  </div>
+
+  </div>
+</form>

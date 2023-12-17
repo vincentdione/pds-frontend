@@ -9,7 +9,7 @@
         <div class="profile-image flex-1">
           <div class="wrapperImg" (click)="triggerFileInput()">
             <!-- Affichage de l'image de profil -->
-            <img [src]="cadre.img || '../../../assets/img/profil.png'" alt="Image de profil" class="circular-image">
+            <img style="width: 250px; height: 250px;" [src]="getImageUrl()" alt="Image de profil" class="circular-image">
 
             <!-- Bouton pour ajouter une photo -->
             <label for="fileInput">
@@ -19,7 +19,7 @@
             </label>
 
             <!-- Input de type fichier invisible -->
-            <input type="file" id="fileInput" style="display: none" (change)="onUpload()">
+            <input type="file" id="fileInput" style="display: none" #fileInput (change)="onUpload()">
           </div>
         </div>
 
@@ -74,17 +74,18 @@
           <mat-card class="cardDetails">
             <div class="profile-prof-info">
               <h1>Situation Professionnelle</h1>
-              <p style="font-size: 18px">Profession actuelle : {{ cadre.professionActuelle }}</p>
-              <p style="font-size: 18px">Intitulé de fonction 1 : {{ cadre.intituleFonction1 }}</p>
-              <p style="font-size: 18px">Intitulé de fonction 2 : {{ cadre.intituleFonction2 }}</p>
-              <p style="font-size: 18px">Année 1 : {{ cadre.annee1 }}</p>
-              <p style="font-size: 18px">Année 2 : {{ cadre.annee2 }}</p>
+              <p style="font-size: 18px">Profession actuelle : {{ cadre.professionActuelle == 1 ? 'Oui': 'Non'}}</p>
+              <p style="font-size: 18px" *ngIf="cadre.professionActuelle == 1 ">Fonction actuelle : {{ cadre.fonctionActuelle}}</p>
               <p style="font-size: 18px">Niveau d'étude : {{ cadre.niveauEtude }}</p>
-              <p style="font-size: 18px">Intitulé d'école 1 : {{ cadre.intituleEcole1 }}</p>
-              <p style="font-size: 18px">Intitulé d'école 2 : {{ cadre.intituleEcole2 }}</p>
-              <p style="font-size: 18px">Année d'école 1 : {{ cadre.anneeEcole1 }}</p>
-              <p style="font-size: 18px">Année d'école 2 : {{ cadre.anneeEcole2 }}</p>
               <p style="font-size: 18px">Spécialisation : {{ cadre.specialisation }}</p>
+              <p style="font-size: 18px">Fonctions Antérieures:</p>
+              <ul>
+                <li *ngFor="let fonction of cadre.fonctionAnterieure">{{ fonction }}</li>
+              </ul>
+              <p style="font-size: 18px">Diplomes:</p>
+              <ul>
+                <li *ngFor="let diplome of cadre.diplome">{{ diplome }}</li>
+              </ul>
               <p style="font-size: 18px">Langues parlées:</p>
               <ul>
                 <li *ngFor="let langue of cadre.languesParlees">{{ langue }}</li>
@@ -101,19 +102,16 @@
           <mat-card class="cardDetails">
             <h1>Situation Militante</h1>
             <p style="font-size: 18px">Adhésion PDS : {{ cadre.adhesionPds }}</p>
-            <p style="font-size: 18px">Carte membre : {{ cadre.carteMembre }}</p>
-            <p style="font-size: 18px">Année de la carte : {{ cadre.anneeCarte }}</p>
+            <p style="font-size: 18px">Carte membre : {{ cadre.carteMembre == 1 ? 'Oui' : 'Non' }}</p>
+            <p style="font-size: 18px" *ngIf="cadre.carteMembre == 1">Année de la carte : {{ cadre.anneeCarte }}</p>
             <p style="font-size: 18px">Numéro de carte : {{ cadre.numeroCarte }}</p>
-            <p style="font-size: 18px">Fonctions au parti : {{ cadre.fonctionsParti }}</p>
+            <p style="font-size: 18px">Fonctions au parti : {{ cadre.fonctionsParti == 1 ? 'Oui' : 'Non' }}</p>
             <p style="font-size: 18px">Numéro CIN : {{ cadre.numeroCIN }}</p>
             <p style="font-size: 18px">Date de délivrance de la CIN : {{ cadre.dateDelivranceCIN | date: 'dd/MM/yyyy' }}</p>
             <p style="font-size: 18px">Date d'expiration de la CIN : {{ cadre.dateExpirationCIN | date: 'dd/MM/yyyy' }}</p>
             <p style="font-size: 18px">Numéro de carte électeur : {{ cadre.numeroCarteElecteur }}</p>
             <p style="font-size: 18px">Centre de vote : {{ cadre.centreVote }}</p>
-            <p style="font-size: 18px">Fédération : {{ cadre.federation }}</p>
-            <p style="font-size: 18px">Section : {{ cadre.section }}</p>
-            <p style="font-size: 18px">Secteur : {{ cadre.secteur }}</p>
-            <p style="font-size: 18px">Mouvement de soutien : {{ cadre.mouvementSoutien }}</p>
+            <p style="font-size: 18px">Circonscription : {{ cadre.circonscription }}</p>
             <p style="font-size: 18px">Région : {{ cadre.region }}</p>
             <p style="font-size: 18px">Commune : {{ cadre.commune }}</p>
             <p style="font-size: 18px">Départ : {{ cadre.depart }}</p>

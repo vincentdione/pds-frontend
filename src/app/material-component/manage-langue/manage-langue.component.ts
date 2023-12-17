@@ -1,32 +1,31 @@
 import { ConfirmationComponent } from './../dialog/confirmation/confirmation.component';
-import { AddRegionComponent } from './../dialog/add-region/add-region.component';
-import { MatPaginator } from '@angular/material/paginator';
+import { AddLangueComponent } from './../dialog/add-langue/add-langue.component';
 import { GlobalConstants } from './../../shared/global-constants';
 import { MatTableDataSource } from '@angular/material/table';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { SnackbarService } from './../../services/snackbar.service';
 import { Router } from '@angular/router';
-import { LocaliteService } from './../services/localite.service';
+import { SnackbarService } from './../../services/snackbar.service';
+import { LangueService } from './../../services/langue.service';
+import { MatPaginator } from '@angular/material/paginator';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { RegionService } from 'src/app/services/region.service';
 
 @Component({
-  selector: 'app-manage-localite',
-  templateUrl: './manage-localite.component.html',
-  styleUrls: ['./manage-localite.component.scss']
+  selector: 'app-manage-langue',
+  templateUrl: './manage-langue.component.html',
+  styleUrls: ['./manage-langue.component.scss']
 })
-export class ManageLocaliteComponent implements OnInit {
+export class ManageLangueComponent implements OnInit {
 
-  displayColumns : string [] = ["nom","description","action"];
+  displayColumns : string [] = ["libelle","code","action"];
   dataSource:any;
   responseMessage : any;
 
   @ViewChild(MatPaginator, { static: true })
   paginator!: MatPaginator;
 
-  constructor(private localiteService: LocaliteService, private router: Router,
-    private snackbarService : SnackbarService, private regionService : RegionService,
+  constructor(private langueService: LangueService, private router: Router,
+    private snackbarService : SnackbarService,
     private dialog : MatDialog, private ngxService: NgxUiLoaderService) { }
 
   ngOnInit(): void {
@@ -35,7 +34,7 @@ export class ManageLocaliteComponent implements OnInit {
   }
 
   tableData(){
-    this.regionService.getRegions().subscribe((res:any) => {
+    this.langueService.getLangues().subscribe((res:any) => {
       this.ngxService.stop()
       this.dataSource = new MatTableDataSource(res)
       this.dataSource.paginator = this.paginator;
@@ -60,19 +59,17 @@ export class ManageLocaliteComponent implements OnInit {
   }
 
 
-  handleAddLocalite(){
-
-
+  handleAddLangue(){
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
       action:'Ajouter'
     }
     dialogConfig.width = "1000px"
-    const dialogRef = this.dialog.open(AddRegionComponent,dialogConfig);
+    const dialogRef = this.dialog.open(AddLangueComponent,dialogConfig);
     this.router.events.subscribe(()=>{
       dialogRef.close();
     })
-    const sub = dialogRef.componentInstance.onAddRegion.subscribe(
+    const sub = dialogRef.componentInstance.onAddLangue.subscribe(
       (res:any)=>{
         this.tableData()
       }
@@ -80,46 +77,48 @@ export class ManageLocaliteComponent implements OnInit {
 
   }
 
-  handleEditLocalite(values:any){
+  handleEditLangue(values:any){
+
+    console.log(values)
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
       action:'Modifier',
       data: values
     }
     dialogConfig.width = "1000px"
-    const dialogRef = this.dialog.open(AddRegionComponent,dialogConfig);
+    const dialogRef = this.dialog.open(AddLangueComponent,dialogConfig);
     this.router.events.subscribe(()=>{
       dialogRef.close();
     })
-    const sub = dialogRef.componentInstance.onUpdateRegion.subscribe(
+    const sub = dialogRef.componentInstance.onUpdatelangue.subscribe(
       (res:any)=>{
         this.tableData()
       }
     )
   }
 
-  handleDeleteLocalite(values:any){
+  handleDeleteLangue(values:any){
+
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
-      message:"Supprimer la région  "+values.reg_name
+      message:"Supprimer la langue  "+values.libelle
     }
     const dialogRef = this.dialog.open(ConfirmationComponent,dialogConfig);
     const sub = dialogRef.componentInstance.onEmitStatusChange.subscribe((res)=>{
        this.ngxService.start();
-       this.deleteRegion(values.id)
+       this.deleteLangue(values.id)
        dialogRef.close();
 
     })
   }
 
+  deleteLangue(id:any){
 
-  deleteRegion(id:any){
-
-    this.regionService.deleteRegion(id).subscribe((res:any)=>{
+    this.langueService.deleteLangue(id).subscribe((res:any)=>{
       this.ngxService.stop()
       this.tableData()
       this.responseMessage = res?.message
-      this.snackbarService.openSnackbar("Région supprimée avec success !","success")
+      this.snackbarService.openSnackbar("Langue supprimée avec success !","success")
   },(error:any)=>{
     this.ngxService.stop()
     if(error.error?.message){
@@ -131,6 +130,5 @@ export class ManageLocaliteComponent implements OnInit {
   this.snackbarService.openSnackbar(this.responseMessage,GlobalConstants.error)
   })
   }
-
 
 }

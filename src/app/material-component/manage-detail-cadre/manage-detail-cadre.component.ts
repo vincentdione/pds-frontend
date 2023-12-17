@@ -17,8 +17,8 @@ export class ManageDetailCadreComponent implements OnInit {
 
   selectedFile!: File;
 
-  @ViewChild('fileInput',{static:false})
-  fileInput!: ElementRef
+  @ViewChild('fileInput', { static: false }) fileInput!: ElementRef;
+
 
 
   ngOnInit(): void {
@@ -56,14 +56,19 @@ export class ManageDetailCadreComponent implements OnInit {
   }
 
   onUpload(): void {
-   const imageBlob = this.fileInput.nativeElement.files[0]
-   const file = new FormData()
-   file.set('file',imageBlob)
+    if (this.fileInput && this.fileInput.nativeElement.files.length > 0) {
+      const imageBlob = this.fileInput.nativeElement.files[0];
+      const file = new FormData();
+      file.append('file', imageBlob);
 
-   this.cadreService.uploadImages(this.cadre.id).subscribe((res:any)=>{
-     console.log(res)
-   })
+      this.cadreService.uploadImages(this.cadre.id,file).subscribe((res: any) => {
+        console.log(res);
+      });
+    }
+  }
 
+  getImageUrl(): string {
+    return this.cadre.image ? this.cadreService.getImageUrl(this.cadre.image) : '../../../assets/img/profil.png';
   }
 
   ajouterPhoto(){

@@ -22,6 +22,9 @@ import { MaterialComponentComponent } from './material-component/material-compon
 import { DetailCadreComponent } from './dialog/detail-cadre/detail-cadre.component';
 import { ManageDetailCadreComponent } from './manage-detail-cadre/manage-detail-cadre.component';
 import { AddUserComponent } from './dialog/add-user/add-user.component';
+import { ManageLangueComponent } from './manage-langue/manage-langue.component';
+import { AddRegionComponent } from './dialog/add-region/add-region.component';
+import { AddLangueComponent } from './dialog/add-langue/add-langue.component';
 
 
 
@@ -61,6 +64,9 @@ const firebaseConfig = {
     DetailCadreComponent,
     ManageDetailCadreComponent,
     AddUserComponent,
+    ManageLangueComponent,
+    AddRegionComponent,
+    AddLangueComponent,
   ]
 })
 export class MaterialComponentsModule {}

@@ -1,8 +1,9 @@
+import { LangueService } from './../../../services/langue.service';
 import { GlobalConstants } from './../../../shared/global-constants';
 import { SnackbarService } from './../../../services/snackbar.service';
 import { PatientService } from './../../../services/patient.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Component, OnInit, EventEmitter, Inject } from '@angular/core';
 
 @Component({
@@ -21,13 +22,13 @@ export class PatientComponent implements OnInit {
   action :any = "Ajouter";
   responseMessage:any;
   imagePreviewUrl: string | ArrayBuffer | null = null;
-  langues: string[] = [];
+  langues: any [] = [];
 
   selectedFile!: File;
 
 
   constructor(@Inject(MAT_DIALOG_DATA) public dialogData: any,
-  private formBuilder : FormBuilder,
+  private formBuilder : FormBuilder,private langueService: LangueService,
   private patientService: PatientService,private dialogRef: MatDialogRef<PatientComponent>,private snackbarService: SnackbarService ) { }
 
   ngOnInit(): void {
@@ -50,7 +51,7 @@ export class PatientComponent implements OnInit {
       telephoneFixe: [''],
       whatsapp: [''],
       email: ['', [Validators.required, Validators.email]],
-      url: ['', [Validators.required]],
+      url: [''],
       image: ['']
     });
 
@@ -64,11 +65,8 @@ export class PatientComponent implements OnInit {
       dateDelivranceCIN: ['', Validators.required],
       dateExpirationCIN: ['', Validators.required],
       numeroCarteElecteur: ['', Validators.required],
+      circonscription: ['', Validators.required],
       centreVote: ['', Validators.required],
-      federation: ['', Validators.required],
-      section: ['', Validators.required],
-      secteur: ['', Validators.required],
-      mouvementSoutien: ['', Validators.required],
       region: ['', Validators.required],
       commune: ['', Validators.required],
       depart: ['', Validators.required],
@@ -80,21 +78,17 @@ export class PatientComponent implements OnInit {
 
     this.situationProfForm = this.formBuilder.group({
       professionActuelle: ['', Validators.required],
-      intituleFonction1: ['', Validators.required],
-      intituleFonction2: ['', Validators.required],
-      annee1: ['', Validators.required],
-      annee2: ['', Validators.required],
+      fonctionActuelle: [''],
+      fonctionAnterieures: this.formBuilder.array([]),
       niveauEtude: ['', Validators.required],
-      intituleEcole1: ['', Validators.required],
-      intituleEcole2: ['', Validators.required],
-      anneeEcole1: ['', Validators.required],
-      anneeEcole2: ['', Validators.required],
+      diplomes: this.formBuilder.array([]), // Initialize with one field
       specialisation: ['', Validators.required],
       langueParlees: [[]],
       langueEcrites: [[]],
       autres: ['', Validators.required],
-
     });
+
+
 
     if(this.dialogData.action === "Modifier"){
       this.dialogAction = "Modifier"
@@ -103,6 +97,8 @@ export class PatientComponent implements OnInit {
       this.situationMilitanteForm.patchValue(this.dialogData.data)
       this.situationProfForm.patchValue(this.dialogData.data)
     }
+
+    this.getLangues()
 
   }
 
@@ -122,6 +118,14 @@ export class PatientComponent implements OnInit {
     return this.situationProfForm.get('langueParlees').value as string[];
   }
 
+  getDiplomes(): string[] {
+    return this.situationProfForm.get('diplomes').value as string[];
+  }
+
+  getFonctionAnterieuress(): string[] {
+    return this.situationProfForm.get('fonctionAnterieures').value as string[];
+  }
+
   getLanguesEcrites(): string[] {
     return this.situationProfForm.get('langueEcrites').value as string[];
   }
@@ -132,7 +136,11 @@ export class PatientComponent implements OnInit {
 
     const langueParlees = this.getLanguesParlees();
     const langueEcrites = this.getLanguesEcrites();
+    const diplomes = this.getDiplomes();
+    const fonctionAnterieures = this.getFonctionAnterieuress();
 
+
+    console.log(situationProfFormData)
 
     const formData = new FormData();
 
@@ -169,10 +177,7 @@ export class PatientComponent implements OnInit {
         dateExpirationCIN: situationMilitanteFormData.dateExpirationCIN,
         numeroCarteElecteur: situationMilitanteFormData.numeroCarteElecteur,
         centreVote: situationMilitanteFormData.centreVote,
-        federation: situationMilitanteFormData.federation,
-        section: situationMilitanteFormData.section,
-        secteur: situationMilitanteFormData.secteur,
-        mouvementSoutien: situationMilitanteFormData.mouvementSoutien,
+        circonscription: situationMilitanteFormData.circonscription,
         region: situationMilitanteFormData.region,
         commune: situationMilitanteFormData.commune,
         depart: situationMilitanteFormData.depart,
@@ -182,22 +187,22 @@ export class PatientComponent implements OnInit {
       },
       situationProf: {
         professionActuelle: situationProfFormData.professionActuelle,
-        intituleFonction1: situationProfFormData.intituleFonction1,
-        intituleFonction2: situationProfFormData.intituleFonction2,
-        annee1: situationProfFormData.annee1,
-        annee2: situationProfFormData.annee2,
+        fonctionActuelle: situationProfFormData.fonctionActuelle,
         niveauEtude: situationProfFormData.niveauEtude,
-        intituleEcole1: situationProfFormData.intituleEcole1,
-        intituleEcole2: situationProfFormData.intituleEcole2,
-        anneeEcole1: situationProfFormData.anneeEcole1,
-        anneeEcole2: situationProfFormData.anneeEcole2,
+        fonctionAnterieures:fonctionAnterieures,
+        diplomes: diplomes, // Initialize with one field
         specialisation: situationProfFormData.specialisation,
         langueParlees: langueParlees,
         langueEcrites: langueEcrites,
         autres: situationProfFormData.autres
       }
 
+
+
     };
+
+    console.log(data.situationProf)
+
     this.patientService.addCadre(data,this.selectedFile).subscribe(
       (res: any) => {
         this.dialogRef.close();
@@ -288,10 +293,7 @@ export class PatientComponent implements OnInit {
         dateExpirationCIN: situationMilitanteFormData.dateExpirationCIN,
         numeroCarteElecteur: situationMilitanteFormData.numeroCarteElecteur,
         centreVote: situationMilitanteFormData.centreVote,
-        federation: situationMilitanteFormData.federation,
-        section: situationMilitanteFormData.section,
-        secteur: situationMilitanteFormData.secteur,
-        mouvementSoutien: situationMilitanteFormData.mouvementSoutien,
+        circonscription: situationMilitanteFormData.circonscription,
         region: situationMilitanteFormData.region,
         commune: situationMilitanteFormData.commune,
         depart: situationMilitanteFormData.depart,
@@ -301,15 +303,10 @@ export class PatientComponent implements OnInit {
       },
       situationProf: {
         professionActuelle: situationProfFormData.professionActuelle,
-        intituleFonction1: situationProfFormData.intituleFonction1,
-        intituleFonction2: situationProfFormData.intituleFonction2,
-        annee1: situationProfFormData.annee1,
-        annee2: situationProfFormData.annee2,
+        fonctionActuelle: situationProfFormData.fonctionActuelle,
         niveauEtude: situationProfFormData.niveauEtude,
-        intituleEcole1: situationProfFormData.intituleEcole1,
-        intituleEcole2: situationProfFormData.intituleEcole2,
-        anneeEcole1: situationProfFormData.anneeEcole1,
-        anneeEcole2: situationProfFormData.anneeEcole2,
+        fonctionAnterieures:situationProfFormData.fonctionAnterieure,
+        diplomes: situationProfFormData.diplome, // Initialize with one field
         specialisation: situationProfFormData.specialisation,
         langueParlees: situationProfFormData.langueParlees,
         langueEcrites: situationProfFormData.langueEcrites,
@@ -317,6 +314,10 @@ export class PatientComponent implements OnInit {
       }
     }
 
+    console.log("update")
+    console.log(data)
+    console.log(data.situationProf)
+    console.log("update")
 
     this.patientService.updateCadre(data.id,data).subscribe((res:any)=>{
        this.dialogRef.close()
@@ -344,6 +345,21 @@ export class PatientComponent implements OnInit {
     stepper.previous();
   }
 
+
+  getLangues(){
+    this.langueService.getLangues().subscribe((res:any) => {
+      this.langues = res
+      console.log(res)
+   },(error:any)=>{
+     if(error.error?.message){
+       this.responseMessage = error.error?.message
+   }
+   else {
+     this.responseMessage = GlobalConstants.genericErrorMessage
+   }
+   this.snackbarService.openSnackbar(this.responseMessage,GlobalConstants.error)
+   })
+  }
 
   onSubmitClick(stepper:any) {
     if(this.dialogAction == 'Modifier'){
@@ -410,6 +426,61 @@ export class PatientComponent implements OnInit {
       }
     }
   }
+
+
+
+get fonctionAnterieures() {
+  return this.situationProfForm.get('fonctionAnterieures') as FormArray;
+}
+
+get diplomes() {
+  return this.situationProfForm.get('diplomes') as FormArray;
+}
+
+addFonctionAnterieure() {
+  const fonctionAnterieuresArray = this.situationProfForm.get('fonctionAnterieures') as FormArray;
+  fonctionAnterieuresArray.push(this.formBuilder.control(''));
+}
+
+removeFonctionAnterieure(index: number) {
+  this.fonctionAnterieures.removeAt(index);
+}
+
+addDiplome() {
+  const diplomesArray = this.situationProfForm.get('diplomes') as FormArray;
+  diplomesArray.push(this.formBuilder.control(''));
+}
+
+removeDiplome(index: number) {
+  this.diplomes.removeAt(index);
+}
+
+onProfessionActuelleChange() {
+  const fonctionActuelleControl = this.situationProfForm.get('fonctionActuelle');
+
+  if (this.situationProfForm.get('professionActuelle').value === 'false') {
+    fonctionActuelleControl.setValue('');
+    fonctionActuelleControl.clearValidators();
+  } else {
+    fonctionActuelleControl.setValidators([Validators.required]);
+  }
+
+  fonctionActuelleControl.updateValueAndValidity();
+}
+
+createDiplome(): FormGroup {
+  return this.formBuilder.group({
+    ecole: [''], // Set default value as needed
+  });
+}
+
+createFonctionAnterieur(): FormGroup {
+  return this.formBuilder.group({
+    fonction: [''],
+    annee: [''],// Set default value as needed
+  });
+}
+
 
 }
 

@@ -13,8 +13,9 @@
 }
 
 .grid-container {
-  display: grid;
+  display: flex;
   grid-template-columns: 1fr 1fr;
+  flex-direction: column;
   gap: 16px;
 }
 
@@ -65,16 +66,27 @@
 .btn{
   background-color : var(--primary-color);
   color : var(--secondary-color);
+  width: 100%;
 }
 
-.form-fields-container {
+.danger{
+  background-color : crimson;
+  color : var(--secondary-color);
+  width: 100%;
+}
+
+
+
+.full-width {
+  width: 100%;
+}
+
+.grid-item.full-width {
+  grid-column: 1 / -1; /* Utilisez cette règle pour étendre sur toutes les colonnes */
+}
+
+.wrapper{
   display: flex;
-}
-
-.field {
-  margin-right: 10px; /* Add margin between the fields */
-}
-
-.delete-icon {
-  color: red;
+  flex-direction: row;
+  gap: 10px;
 }

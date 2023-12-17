@@ -17,6 +17,13 @@ export class PatientService {
     })
   }
 
+
+  importCadres(data: any){
+    return this.httpClient.post(this.url+"/cadres/import/", data,{
+      headers: new HttpHeaders().set( 'Content-Type','application/json')
+    })
+  }
+
   updateCadre(id:any,data:any){
     console.log(data)
     return this.httpClient.patch(this.url+"/cadres/update/"+id, data,{
@@ -24,10 +31,9 @@ export class PatientService {
     })
   }
 
-  uploadImages(id:any){
-    return this.httpClient.patch(this.url+"/cadres/upload/"+id,{
-      headers: new HttpHeaders().set( 'Content-Type','application/json')
-    })
+  uploadImages(id:any,file: FormData) {
+    console.log("first upload"+file)
+    return this.httpClient.post(this.url + "/cadres/upload/"+id, file);
   }
 
   deleteCadre(id:any){
@@ -51,5 +57,8 @@ export class PatientService {
     })
   }
 
+  getImageUrl(imageName: string): string {
+    return `${this.url}/images/${imageName}`;
+  }
 
 }

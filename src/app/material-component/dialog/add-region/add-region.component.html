@@ -1,0 +1,58 @@
+
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <span class="title-center">{{dialogData.action}} Région </span>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<form [formGroup]="regionForm" enctype="multipart/form-data">
+  <div class="grid-container">
+
+    <div class="grid-item">
+      <mat-form-field>
+        <mat-label>Pays</mat-label>
+        <mat-select formControlName="selectedCountry" required>
+          <mat-option *ngFor="let country of pays" [value]="country.id">{{ country.pays_name }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="regionForm.controls.selectedCountry.touched && regionForm.controls.selectedCountry.invalid">
+          <span *ngIf="regionForm.controls.selectedCountry.errors.required">Le pays est obligatoire</span>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+
+    <div class="grid-item">
+      <mat-form-field>
+        <mat-label>Nom de la région</mat-label>
+        <input matInput formControlName="reg_name" required>
+        <mat-error *ngIf="regionForm.controls.reg_name.touched && regionForm.controls.reg_name.invalid">
+          <span *ngIf="regionForm.controls.reg_name.errors.required" >This field is mandatory</span>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="grid-item">
+      <mat-form-field>
+        <mat-label>Description</mat-label>
+        <input matInput formControlName="reg_description" required>
+        <mat-error *ngIf="regionForm.controls.reg_description.touched && regionForm.controls.reg_description.invalid">
+          <span *ngIf="regionForm.controls.reg_description.errors.required" >This field is mandatory</span>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+
+  <div class="wrapper">
+    <div class="grid-item"  *ngIf="dialogData.action === 'Ajouter'">
+      <button mat-raised-button class="btn" type="submit" (click)="onAddNewRegion()">{{dialogData.action}}</button>
+    </div>
+    <div class="grid-item" *ngIf="dialogData.action === 'Modifier'">
+      <button mat-raised-button class="btn" type="submit" (click)="onEditRegion()">{{dialogData.action}}</button>
+    </div>
+    <div class="grid-item">
+      <button mat-raised-button class="danger" mat-dialog-close>Fermer</button>
+    </div>
+  </div>
+
+  </div>
+</form>

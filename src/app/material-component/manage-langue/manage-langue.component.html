@@ -1,0 +1,41 @@
+
+
+<mat-card>
+  <b> <span>Gestion des langues</span> </b>
+  <button mat-flat-button  class="float-right" (click)="handleAddLangue()" >Ajouter une langue</button>
+</mat-card>
+<hr>
+<mat-card>
+  <mat-form-field appearance="fill" >
+    <mat-label>Filtrer</mat-label>
+    <input matInput (keyup)="applyFilter($event)" #input>
+  </mat-form-field>
+</mat-card>
+<hr>
+<div class="responsive_table">
+   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+       <ng-container matColumnDef="libelle">
+        <th mat-header-cell *matHeaderCellDef>Libelle</th>
+        <td mat-cell *matCellDef="let element">{{element.libelle}}</td>
+       </ng-container>
+       <ng-container matColumnDef="code">
+        <th mat-header-cell *matHeaderCellDef>Code</th>
+        <td mat-cell *matCellDef="let element">{{element.code}}</td>
+       </ng-container>
+       <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef>Action</th>
+        <td mat-cell *matCellDef="let element" class="action-link" >
+          <button mat-icon-button color="btn" matTooltip="Modifier" (click)="handleEditLangue(element)" >
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" matTooltip="Supprimer" (click)="handleDeleteLangue(element)" >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+       </ng-container>
+       <tr mat-header-row *matHeaderRowDef="displayColumns;sticky:true"></tr>
+       <tr mat-row *matRowDef="let row;columns:displayColumns"></tr>
+   </table>
+   <mat-paginator [pageSizeOptions]="[10, 25, 50]" showFirstLastButtons></mat-paginator>
+
+</div>

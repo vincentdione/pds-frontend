@@ -13,6 +13,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { DetailCadreComponent } from '../dialog/detail-cadre/detail-cadre.component';
 import { MatPaginator } from '@angular/material/paginator';
+import * as XLSX from 'xlsx';
+
 
 @Component({
   selector: 'app-manage-patient',
@@ -26,6 +28,11 @@ export class ManagePatientComponent implements OnInit {
   regions:any;
   responseMessage : any;
   searchForm!: FormGroup;
+
+  selectedFile: File | null = null;
+
+  excelData:any;
+
 
   @ViewChild(MatPaginator, { static: true })
   paginator!: MatPaginator;
@@ -115,6 +122,7 @@ export class ManagePatientComponent implements OnInit {
       action:'Modifier',
       data: values
     }
+    console.log(values)
     dialogConfig.width = "1000px"
     const dialogRef = this.dialog.open(PatientComponent,dialogConfig);
     this.router.events.subscribe(()=>{
@@ -211,6 +219,53 @@ export class ManagePatientComponent implements OnInit {
       }
     };
     this.router.navigate([`/workspace/cadres/${value.id}`]);
+  }
+
+  onFileSelected(event: any): void {
+    this.ngxService.start()
+
+    const file = event.target.files[0];
+
+  const fileReader = new FileReader();
+  fileReader.readAsArrayBuffer(file);
+  fileReader.onload = (e: any) => {
+    const arrayBuffer = e.target.result;
+
+    // Decode the ArrayBuffer into a string using TextDecoder
+    const textDecoder = new TextDecoder('utf-8');
+    const fileContent = textDecoder.decode(arrayBuffer);
+
+    // Parse the file content as JSON
+    const workbook = XLSX.read(fileContent, { type: 'binary' });
+    const sheetNames = workbook.SheetNames;
+    const excelData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetNames[0]]);
+
+
+    // Call the importCadres method to send data to the service
+    this.cadreService.importCadres(excelData).subscribe(
+      (response) => {
+        this.ngxService.stop()
+        console.log('Data imported successfully:', response);
+        this.snackbarService.openSnackbar("Données importées avec succes!","success")
+        this.tableData()
+      },
+      (error) => {
+        this.ngxService.stop()
+        console.error('Error importing data:', error);
+      }
+    );
+  };
+
+  }
+
+  importFile(): void {
+    if (this.selectedFile) {
+      // Your file import logic goes here
+      console.log('File selected:', this.selectedFile);
+      // You can now perform operations on this.selectedFile, such as uploading it to a server.
+    } else {
+      console.error('No file selected');
+    }
   }
 
 }
