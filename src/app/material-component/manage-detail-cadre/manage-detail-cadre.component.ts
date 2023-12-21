@@ -26,17 +26,23 @@ export class ManageDetailCadreComponent implements OnInit {
     this.route.paramMap.subscribe((params: ParamMap) => {
       const id = params.get('id');
       if (id) {
-        this.cadreService.getOneCadre(id).subscribe((res:any)=>{
-          this.cadre = res;
-        }
-        ,(error:any)=>{
-
-         console.log(error);
-        })
+        this.loadCadre(id);
       } else {
         console.log('Else :');
       }
     });
+  }
+
+
+  loadCadre(id: string): void {
+    this.cadreService.getOneCadre(id).subscribe(
+      (res: any) => {
+        this.cadre = res;
+      },
+      (error: any) => {
+        console.log(error);
+      }
+    );
   }
 
   onFileSelected(event:any): void {
@@ -62,8 +68,13 @@ export class ManageDetailCadreComponent implements OnInit {
       file.append('file', imageBlob);
 
       this.cadreService.uploadImages(this.cadre.id,file).subscribe((res: any) => {
-        console.log(res);
-      });
+        this.cadre.image = res.filename;
+        this.loadCadre(this.cadre.id);
+      },
+      (error: any) => {
+        console.error(error);
+      }
+      );
     }
   }
 

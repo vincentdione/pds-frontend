@@ -19,8 +19,8 @@
       <mat-form-field appearance="fill">
         <mat-label>Profession actuelle</mat-label>
         <mat-select formControlName="professionActuelle">
-          <mat-option value="Oui">Oui</mat-option>
-          <mat-option value="Non">Non</mat-option>
+          <mat-option value="1">Oui</mat-option>
+          <mat-option value="0">Non</mat-option>
         </mat-select>
       </mat-form-field>
     </div>
@@ -28,15 +28,13 @@
       <mat-form-field appearance="fill">
         <mat-label>Langues</mat-label>
         <mat-select formControlName="langues">
-          <mat-option value="anglais">Anglais</mat-option>
-          <mat-option value="francais">Français</mat-option>
-          <mat-option value="arabe">Arabe</mat-option>
-          <mat-option value="allemand">Allemand</mat-option>
-          <mat-option value="espagnol">Espagnol</mat-option>
-          <mat-option value="russe">Russe</mat-option>
+          <mat-option *ngFor="let langue of langues" [value]="langue.libelle">
+            {{ langue.libelle }}
+          </mat-option>
         </mat-select>
       </mat-form-field>
     </div>
+
     <div class="grid-item">
       <mat-form-field appearance="fill">
         <mat-label>Niveau d'étude</mat-label>
@@ -55,8 +53,8 @@
     </div>
     <div class="grid-item">
       <mat-form-field appearance="fill">
-        <mat-label>Fonctions au parti</mat-label>
-        <input matInput  formControlName="fonctionsParti">
+        <mat-label>Fonction Actuelle</mat-label>
+        <input matInput  formControlName="fonctionActuelle">
       </mat-form-field>
     </div>
     <div class="grid-item">
@@ -82,13 +80,30 @@
   </div>
   <div style="display:flex;justify-content: space-between;">
     <button mat-flat-button class="btn" (click)="handleSearch()">Rechercher</button>
-    <input type="file" (change)="onFileSelected($event)" />
+    <label class="custom-file-upload">
+      <mat-icon style="margin-right: 8px;">cloud_upload</mat-icon>
+      <span>Sélectionner un fichier</span>
+      <input type="file" (change)="onFileSelected($event)" />
+    </label>
   </div>
 </mat-card>
 
 <hr>
 <div class="responsive_table">
    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="image">
+      <th mat-header-cell *matHeaderCellDef>Image</th>
+      <td mat-cell *matCellDef="let element">
+         <!-- Use ngIf to check if the cadre has a profile image -->
+         <img *ngIf="element.image" [src]="getImageUrl(element)" alt="Profile Image" width="50" height="50">
+         <!-- Use ngIf else to display a default image if no profile image is available -->
+         <ng-container *ngIf="!element.image;">
+            <img src="../../../assets/img/profil.png" alt="Default Image" width="50" height="50">
+         </ng-container>
+      </td>
+   </ng-container>
+
     <ng-container matColumnDef="matricule">
       <th mat-header-cell *matHeaderCellDef>Matricule</th>
       <td mat-cell *matCellDef="let element">{{element.matricule}}</td>

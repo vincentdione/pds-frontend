@@ -14,6 +14,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { DetailCadreComponent } from '../dialog/detail-cadre/detail-cadre.component';
 import { MatPaginator } from '@angular/material/paginator';
 import * as XLSX from 'xlsx';
+import { LangueService } from 'src/app/services/langue.service';
 
 
 @Component({
@@ -23,7 +24,7 @@ import * as XLSX from 'xlsx';
 })
 export class ManagePatientComponent implements OnInit {
 
-  displayColumns : string [] = ["matricule","nom","prenom","email","telephone","action"];
+  displayColumns : string [] = ["image","matricule","nom","prenom","email","telephone","action"];
   dataSource:any;
   regions:any;
   responseMessage : any;
@@ -32,12 +33,13 @@ export class ManagePatientComponent implements OnInit {
   selectedFile: File | null = null;
 
   excelData:any;
+  langues: any [] = [];
 
 
   @ViewChild(MatPaginator, { static: true })
   paginator!: MatPaginator;
 
-  constructor(private cadreService: PatientService, private router: Router,
+  constructor(private cadreService: PatientService, private router: Router, private langueService:LangueService,
     private snackbarService : SnackbarService, private regionService : RegionService,
     private dialog : MatDialog, private ngxService: NgxUiLoaderService,private fb: FormBuilder) { }
 
@@ -49,12 +51,13 @@ export class ManagePatientComponent implements OnInit {
       langues: [''], // Champ pour les langues
       niveauEtude: [''], // Champ pour le niveau d'étude
       specialisation: [''], // Champ pour la spécialisation
-      fonctionsParti: [''], // Champ pour les fonctions au parti
+      fonctionActuelle: [''], // Champ pour les fonctions au parti
       region: [''], // Champ pour la région
       email: [''], // Champ pour l'email
       telephone: [''], // Champ pour le téléphone
     });
 
+    this.getLangues()
 
   }
 
@@ -187,8 +190,26 @@ export class ManagePatientComponent implements OnInit {
 
   }
 
+
+  getLangues(){
+    this.langueService.getLangues().subscribe((res:any) => {
+      this.langues = res
+      console.log(res)
+   },(error:any)=>{
+     if(error.error?.message){
+       this.responseMessage = error.error?.message
+   }
+   else {
+     this.responseMessage = GlobalConstants.genericErrorMessage
+   }
+   this.snackbarService.openSnackbar(this.responseMessage,GlobalConstants.error)
+   })
+  }
+
   refreshTable(data: any[]) {
     this.dataSource = new MatTableDataSource(data);
+    this.dataSource.paginator = this.paginator;
+
   }
 
   handleSearch(){
@@ -266,6 +287,10 @@ export class ManagePatientComponent implements OnInit {
     } else {
       console.error('No file selected');
     }
+  }
+
+  getImageUrl(cadre:any): string {
+    return cadre.image ? this.cadreService.getImageUrl(cadre.image) : '../../../assets/img/profil.png';
   }
 
 }
