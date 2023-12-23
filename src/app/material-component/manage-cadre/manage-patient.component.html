@@ -130,13 +130,15 @@
           <button mat-icon-button color="btn" matTooltip="Modifier" (click)="handleEditCadre(element)" >
             <mat-icon>edit</mat-icon>
           </button>
+          <button mat-icon-button color="primary" matTooltip="details" (click)="handleDetailCadre(element)"  >
+            <mat-icon>visibility</mat-icon>
+          </button>
+
           <button mat-icon-button color="warn" matTooltip="Supprimer" (click)="handleDeleteCadre(element)" >
             <mat-icon>delete</mat-icon>
           </button>
-          <button mat-icon-button color="warn" matTooltip="details" (click)="handleDetailCadre(element)"  >
-            <mat-icon>list</mat-icon>
-          </button>
-          <button mat-icon-button color="warn" matTooltip="details" (click)="handleRedirectDetailCadre(element)"  >
+
+          <button mat-icon-button color="btn" matTooltip="details" (click)="handleRedirectDetailCadre(element)"  >
             <mat-icon>skip_next</mat-icon>
           </button>
         </td>

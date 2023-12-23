@@ -1,3 +1,4 @@
+
 .circular-image {
   width: 200px;
   height: 200px;
@@ -8,19 +9,61 @@
 .profile-container {
   display: flex;
   justify-content: space-between;
+  padding: 30px;
+
 }
 
 .scrollable-content {
   overflow: auto;
-  max-height: 600px; /* Ajustez la valeur en fonction de vos besoins */
+  padding: 50px;
+  max-height: 100%; /* Ajustez la valeur en fonction de vos besoins */
 }
 
 .identification {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+  padding: 30px;
 }
 .flex-1 {
   flex: 1;
 }
 
+
+.profile-info
+{
+  width: 500px;
+}
+
+.cardDetails{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.circular-image{
+  width: 300px;
+  height: 300px;
+}
+
+.wrapperImg{
+  width: 200px;
+  height: 200px;
+}
+
+.info-user {
+  display: flex;
+  flex-direction: row;
+  gap:10px;
+}
+
+.profile-image{
+  display: flex;
+  flex-direction: column;
+  gap:40px;
+}
+
+.wrapperUserDetails{
+
+}

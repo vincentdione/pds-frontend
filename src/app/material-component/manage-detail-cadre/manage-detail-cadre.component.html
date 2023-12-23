@@ -1,15 +1,11 @@
 <mat-card class="scrollable-content" #profileContainer>
-  <mat-card-header>
-    <mat-card-title>Profil {{cadre.prenom}} - {{cadre.nom}}</mat-card-title>
-  </mat-card-header>
   <mat-card-content class="wrapper">
     <div>
-      <mat-card>
       <div class="identification">
         <div class="profile-image flex-1">
           <div class="wrapperImg" (click)="triggerFileInput()">
             <!-- Affichage de l'image de profil -->
-            <img style="width: 250px; height: 250px;" [src]="getImageUrl()" alt="Image de profil" class="circular-image">
+            <img style="width: 300px; height: 300px;" [src]="getImageUrl()" alt="Image de profil" class="circular-image">
 
             <!-- Bouton pour ajouter une photo -->
             <label for="fileInput">
@@ -21,107 +17,98 @@
             <!-- Input de type fichier invisible -->
             <input type="file" id="fileInput" style="display: none" #fileInput (change)="onUpload()">
           </div>
+          <div class="wrapperUserDetails">
+            <div class="info-user">
+              <mat-icon>account_circle</mat-icon>
+              <p style="font-size: 20px;font-weight: bold;"> {{ cadre.nom }} {{ cadre.prenom }}</p>
+            </div>
+            <div class="info-user">
+              <mat-icon class="info-icon">wc</mat-icon>
+              <p style="font-size: 18px"> {{ cadre.sexe }}</p>
+            </div>
+            <div class="info-user">
+              <mat-icon class="info-icon">phone</mat-icon>
+              <p style="font-size: 18px"> {{ cadre.telephone }}</p>
+            </div>
+            <div class="info-user">
+              <mat-icon class="info-icon">home</mat-icon>
+              <p style="font-size: 18px"> {{ cadre.residence }}</p>
+            </div>
+            <div class="info-user" *ngIf="cadre.telephoneFixe !== null">
+              <mat-icon class="info-icon">phone_in_talk</mat-icon>
+              <p style="font-size: 18px">{{ cadre?.telephoneFixe }}</p>
+            </div>
+
+            <div class="info-user">
+              <mat-icon class="info-icon">message</mat-icon>
+              <p style="font-size: 18px"> {{ cadre.whatsapp }}</p>
+            </div>
+            <div class="info-user">
+              <mat-icon class="info-icon">email</mat-icon>
+              <p style="font-size: 18px"> {{ cadre.email }}</p>
+            </div>
+            <div class="info-user" *ngIf="cadre.url !== null">
+              <mat-icon class="info-icon">web</mat-icon>
+              <p style="font-size: 18px"> {{ cadre?.url }}</p>
+            </div>
+          </div>
         </div>
 
         <div class="profile-info">
-          <mat-card class="cardDetails">
-            <mat-card-header>
-              <div mat-card-avatar class="user-avatar">
-                <!-- Ajoutez ici une icône d'utilisateur, par exemple : -->
-                <mat-icon>account_circle</mat-icon>
-              </div>
-              <mat-card-title>{{ cadre.nom }} {{ cadre.prenom }}</mat-card-title>
-            </mat-card-header>
             <mat-card-content>
-              <div class="info-section">
-                <mat-icon class="info-icon">wc</mat-icon>
-                <p style="font-size: 18px">Sexe : {{ cadre.sexe }}</p>
-              </div>
-              <div class="info-section">
-                <mat-icon class="info-icon">phone</mat-icon>
-                <p style="font-size: 18px">Téléphone : {{ cadre.telephone }}</p>
-              </div>
-              <div class="info-section">
-                <mat-icon class="info-icon">home</mat-icon>
-                <p style="font-size: 18px">Résidence : {{ cadre.residence }}</p>
-              </div>
-              <div class="info-section">
-                <mat-icon class="info-icon">phone_in_talk</mat-icon>
-                <p style="font-size: 18px">Téléphone Fixe : {{ cadre.telephoneFixe }}</p>
-              </div>
-              <div class="info-section">
-                <mat-icon class="info-icon">message</mat-icon>
-                <p style="font-size: 18px">WhatsApp : {{ cadre.whatsapp }}</p>
-              </div>
-              <div class="info-section">
-                <mat-icon class="info-icon">email</mat-icon>
-                <p style="font-size: 18px">Email : {{ cadre.email }}</p>
-              </div>
-              <div class="info-section">
-                <mat-icon class="info-icon">url</mat-icon>
-                <p style="font-size: 18px">Url : {{ cadre?.url }}</p>
-              </div>
-            </mat-card-content>
-          </mat-card>
-        </div>
-
-      </div>
-    </mat-card>
-    <br>
-    <mat-card>
-      <div class="profile-container" >
-        <div class="profile-info">
-          <mat-card class="cardDetails">
-            <div class="profile-prof-info">
               <h1>Situation Professionnelle</h1>
-              <p style="font-size: 18px">Profession actuelle : {{ cadre.professionActuelle == 1 ? 'Oui': 'Non'}}</p>
-              <p style="font-size: 18px" *ngIf="cadre.professionActuelle == 1 ">Fonction actuelle : {{ cadre.fonctionActuelle}}</p>
-              <p style="font-size: 18px">Niveau d'étude : {{ cadre.niveauEtude }}</p>
-              <p style="font-size: 18px">Spécialisation : {{ cadre.specialisation }}</p>
+              <p style="font-size: 18px" *ngIf="cadre.professionActuelle !== null">
+              Profession actuelle :
+              <span [style.color]="cadre.professionActuelle == 1 ? 'green' : 'red'">{{ cadre.professionActuelle == 1 ? 'Oui': 'Non'}}</span>
+            </p>
+              <p style="font-size: 18px" *ngIf="cadre.fonctionActuelle == 1 ">Fonction actuelle : {{ cadre.fonctionActuelle}}</p>
+              <p style="font-size: 18px" *ngIf="cadre.niveauEtude !== null">Niveau d'étude : {{ cadre.niveauEtude }}</p>
+              <p style="font-size: 18px" *ngIf="cadre.specialisation !== null">Spécialisation : {{ cadre.specialisation }}</p>
               <p style="font-size: 18px">Fonctions Antérieures:</p>
-              <ul>
+              <ul *ngIf="cadre.fonctionAnterieure !== null">
                 <li *ngFor="let fonction of cadre.fonctionAnterieure">{{ fonction }}</li>
               </ul>
               <p style="font-size: 18px">Diplomes:</p>
-              <ul>
+              <ul *ngIf="cadre.diplome !== null">
                 <li *ngFor="let diplome of cadre.diplome">{{ diplome }}</li>
               </ul>
               <p style="font-size: 18px">Langues parlées:</p>
-              <ul>
+              <ul *ngIf="cadre.languesParlees !== null">
                 <li *ngFor="let langue of cadre.languesParlees">{{ langue }}</li>
               </ul>
               <p style="font-size: 18px">Langues écrites:</p>
-              <ul>
-                <li *ngFor="let langue of cadre.languesEcrites">{{ langue }}</li>
+              <ul *ngIf="cadre.languesEcrites !== null">
+                <li *ngFor="let langue of cadre.languesEcrites" >{{ langue }}</li>
               </ul>
-              <p style="font-size: 18px">Autres : {{ cadre.autres }}</p>
-            </div>
-          </mat-card>
+              <p style="font-size: 18px" *ngIf="cadre.autres !== null">Autres : {{ cadre.autres }}</p>
+
+            </mat-card-content>
         </div>
+
         <div class="profile-info">
-          <mat-card class="cardDetails">
-            <h1>Situation Militante</h1>
-            <p style="font-size: 18px">Adhésion PDS : {{ cadre.adhesionPds }}</p>
-            <p style="font-size: 18px">Carte membre : {{ cadre.carteMembre == 1 ? 'Oui' : 'Non' }}</p>
-            <p style="font-size: 18px" *ngIf="cadre.carteMembre == 1">Année de la carte : {{ cadre.anneeCarte }}</p>
-            <p style="font-size: 18px">Numéro de carte : {{ cadre.numeroCarte }}</p>
-            <p style="font-size: 18px">Fonctions au parti : {{ cadre.fonctionsParti == 1 ? 'Oui' : 'Non' }}</p>
-            <p style="font-size: 18px">Numéro CIN : {{ cadre.numeroCIN }}</p>
-            <p style="font-size: 18px">Date de délivrance de la CIN : {{ cadre.dateDelivranceCIN | date: 'dd/MM/yyyy' }}</p>
-            <p style="font-size: 18px">Date d'expiration de la CIN : {{ cadre.dateExpirationCIN | date: 'dd/MM/yyyy' }}</p>
-            <p style="font-size: 18px">Numéro de carte électeur : {{ cadre.numeroCarteElecteur }}</p>
-            <p style="font-size: 18px">Centre de vote : {{ cadre.centreVote }}</p>
-            <p style="font-size: 18px">Circonscription : {{ cadre.circonscription }}</p>
-            <p style="font-size: 18px">Région : {{ cadre.region }}</p>
-            <p style="font-size: 18px">Commune : {{ cadre.commune }}</p>
-            <p style="font-size: 18px">Départ : {{ cadre.depart }}</p>
-            <p style="font-size: 18px">Village : {{ cadre.village }}</p>
-            <p style="font-size: 18px">Numéro de centre de vote : {{ cadre.numeroCentreVote }}</p>
-            <p style="font-size: 18px">Numéro de bureau de vote : {{ cadre.numeroBureauVote }}</p>
-          </mat-card>
+            <mat-card-content>
+              <h1>Situation Militante</h1>
+              <p style="font-size: 18px" *ngIf="cadre.adhesionPds !== null">Adhésion PDS : {{ cadre.adhesionPds }}</p>
+              <p style="font-size: 18px" *ngIf="cadre.carteMembre !== null">Carte membre : {{ cadre.carteMembre == 1 ? 'Oui' : 'Non' }}</p>
+              <p style="font-size: 18px" *ngIf="cadre.carteMembre == 1">Année de la carte : {{ cadre.anneeCarte }}</p>
+              <p style="font-size: 18px" *ngIf="cadre.numeroCarte !== null">Numéro de carte : {{ cadre.numeroCarte }}</p>
+              <p style="font-size: 18px" *ngIf="cadre.fonctionsParti !== null">Fonctions au parti : {{ cadre.fonctionsParti == 1 ? 'Oui' : 'Non' }}</p>
+              <p style="font-size: 18px" *ngIf="cadre.numeroCIN !== null">Numéro CIN : {{ cadre.numeroCIN }}</p>
+              <p style="font-size: 18px" *ngIf="cadre.dateDelivranceCIN !== null">Date de délivrance de la CIN : {{ cadre.dateDelivranceCIN | date: 'dd/MM/yyyy' }}</p>
+              <p style="font-size: 18px" *ngIf="cadre.dateExpirationCIN !== null">Date d'expiration de la CIN : {{ cadre.dateExpirationCIN | date: 'dd/MM/yyyy' }}</p>
+              <p style="font-size: 18px" *ngIf="cadre.numeroCarteElecteur !== null">Numéro de carte électeur : {{ cadre.numeroCarteElecteur }}</p>
+              <p style="font-size: 18px" *ngIf="cadre.centreVote !== null">Centre de vote : {{ cadre.centreVote }}</p>
+              <p style="font-size: 18px" *ngIf="cadre.circonscription !== null">Circonscription : {{ cadre.circonscription }}</p>
+              <p style="font-size: 18px" *ngIf="cadre.region !== null">Région : {{ cadre.region }}</p>
+              <p style="font-size: 18px" *ngIf="cadre.commune !== null">Commune : {{ cadre.commune }}</p>
+              <p style="font-size: 18px" *ngIf="cadre.depart !== null">Départ : {{ cadre.depart }}</p>
+              <p style="font-size: 18px" *ngIf="cadre.village !== null">Village : {{ cadre.village }}</p>
+              <p style="font-size: 18px" *ngIf="cadre.numeroCentreVote !== null">Numéro de centre de vote : {{ cadre.numeroCentreVote }}</p>
+              <p style="font-size: 18px" *ngIf="cadre.numeroBureauVote !== null">Numéro de bureau de vote : {{ cadre.numeroBureauVote }}</p>
+            </mat-card-content>
         </div>
+
       </div>
-    </mat-card>
 
     </div>
   </mat-card-content>

@@ -1,81 +1,91 @@
-<mat-card class="scrollable-content" #profileContainer>
-  <mat-card-header>
-    <mat-card-title>Profil Cadre {{cadre.prenom}} - {{cadre.nom}}</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
+  <mat-card-content class="wrapper">
     <div>
-      <mat-card>
       <div class="identification">
         <div class="profile-image flex-1">
-          <img [src]="cadre.image" alt="Image de profil" class="circular-image">
-        </div>
-          <div class="profile-info">
-            <h3>{{ cadre.nom }} {{ cadre.prenom }}</h3>
-            <p>Sexe : {{ cadre.sexe }}</p>
-            <p>Téléphone : {{ cadre.telephone }}</p>
-            <p>Résidence : {{ cadre.residence }}</p>
-            <p>Téléphone Fixe : {{ cadre.telephoneFixe }}</p>
-            <p>WhatsApp : {{ cadre.whatsapp }}</p>
-            <p>Email : {{ cadre.email }}</p>
+          <div class="wrapperImg" (click)="triggerFileInput()">
+            <!-- Affichage de l'image de profil -->
+            <img style="width: 150px; height: 150px;" [src]="getImageUrl()" alt="Image de profil" class="circular-image">
+
+            <!-- Bouton pour ajouter une photo -->
+            <label for="fileInput">
+              <button mat-icon-button>
+                <mat-icon>add_a_photo</mat-icon>
+              </button>
+            </label>
+
+            <!-- Input de type fichier invisible -->
+            <input type="file" id="fileInput" style="display: none" #fileInput (change)="onUpload()">
+
           </div>
-      </div>
-    </mat-card>
-    <br>
-    <mat-card>
-      <div class="profile-container" >
+          <div class="wrapperUserDetails">
+            <div class="info-user">
+              <mat-icon>account_circle</mat-icon>
+              <p style="font-size: 20px;font-weight: bold;"> {{ cadre.nom }} {{ cadre.prenom }}</p>
+            </div>
+            <div class="info-user">
+              <mat-icon class="info-icon">wc</mat-icon>
+              <p style="font-size: 18px"> {{ cadre.sexe }}</p>
+            </div>
+            <div class="info-user">
+              <mat-icon class="info-icon">phone</mat-icon>
+              <p style="font-size: 18px"> {{ cadre.telephone }}</p>
+            </div>
+            <div class="info-user">
+              <mat-icon class="info-icon">home</mat-icon>
+              <p style="font-size: 18px"> {{ cadre.residence }}</p>
+            </div>
+            <div class="info-user" *ngIf="cadre.telephoneFixe !== null">
+              <mat-icon class="info-icon">phone_in_talk</mat-icon>
+              <p style="font-size: 18px">{{ cadre?.telephoneFixe }}</p>
+            </div>
+
+            <div class="info-user">
+              <mat-icon class="info-icon">message</mat-icon>
+              <p style="font-size: 18px"> {{ cadre.whatsapp }}</p>
+            </div>
+            <div class="info-user">
+              <mat-icon class="info-icon">email</mat-icon>
+              <p style="font-size: 18px"> {{ cadre.email }}</p>
+            </div>
+            <div class="info-user" *ngIf="cadre.url !== null">
+              <mat-icon class="info-icon">web</mat-icon>
+              <p style="font-size: 18px"> {{ cadre?.url }}</p>
+            </div>
+          </div>
+        </div>
+
         <div class="profile-info">
-          <div class="profile-prof-info">
-            <h4>Situation Professionnelle</h4>
-            <p>Profession actuelle : {{ cadre.professionActuelle }}</p>
-            <p>Intitulé de fonction 1 : {{ cadre.intituleFonction1 }}</p>
-            <p>Intitulé de fonction 2 : {{ cadre.intituleFonction2 }}</p>
-            <p>Année 1 : {{ cadre.annee1 }}</p>
-            <p>Année 2 : {{ cadre.annee2 }}</p>
-            <p>Niveau d'étude : {{ cadre.niveauEtude }}</p>
-            <p>Intitulé d'école 1 : {{ cadre.intituleEcole1 }}</p>
-            <p>Intitulé d'école 2 : {{ cadre.intituleEcole2 }}</p>
-            <p>Année d'école 1 : {{ cadre.anneeEcole1 }}</p>
-            <p>Année d'école 2 : {{ cadre.anneeEcole2 }}</p>
-            <p>Spécialisation : {{ cadre.specialisation }}</p>
-            <p>Langues parlées:</p>
-            <ul>
-              <li *ngFor="let langue of cadre.langueParlees">{{ langue }}</li>
-            </ul>
-            <p>Langues écrites:</p>
-            <ul>
-              <li *ngFor="let langue of cadre.langueEcrites">{{ langue }}</li>
-            </ul>
-            <p>Autres : {{ cadre.autres }}</p>
-          </div>
+            <mat-card-content>
+              <h1>Situation Professionnelle</h1>
+              <p style="font-size: 18px" *ngIf="cadre.professionActuelle !== null">Profession actuelle : {{ cadre.professionActuelle == 1 ? 'Oui': 'Non'}}</p>
+              <p style="font-size: 18px" *ngIf="cadre.fonctionActuelle == 1 ">Fonction actuelle : {{ cadre.fonctionActuelle}}</p>
+              <p style="font-size: 18px" *ngIf="cadre.niveauEtude !== null">Niveau d'étude : {{ cadre.niveauEtude }}</p>
+              <p style="font-size: 18px" *ngIf="cadre.specialisation !== null">Spécialisation : {{ cadre.specialisation }}</p>
+              <p style="font-size: 18px">Fonctions Antérieures:</p>
+              <ul *ngIf="cadre.fonctionAnterieure !== null">
+                <li *ngFor="let fonction of cadre.fonctionAnterieure">{{ fonction }}</li>
+              </ul>
+              <p style="font-size: 18px">Diplomes:</p>
+              <ul *ngIf="cadre.diplome !== null">
+                <li *ngFor="let diplome of cadre.diplome">{{ diplome }}</li>
+              </ul>
+              <p style="font-size: 18px">Langues parlées:</p>
+              <ul *ngIf="cadre.languesParlees !== null">
+                <li *ngFor="let langue of cadre.languesParlees">{{ langue }}</li>
+              </ul>
+              <p style="font-size: 18px">Langues écrites:</p>
+              <ul *ngIf="cadre.languesEcrites !== null">
+                <li *ngFor="let langue of cadre.languesEcrites" >{{ langue }}</li>
+              </ul>
+              <p style="font-size: 18px" *ngIf="cadre.autres !== null">Autres : {{ cadre.autres }}</p>
+
+            </mat-card-content>
         </div>
-        <div class="profile-militant-info">
-          <h4>Situation Militante</h4>
-          <p>Adhésion PDS : {{ cadre.adhesionPds }}</p>
-          <p>Carte membre : {{ cadre.carteMembre }}</p>
-          <p>Année de la carte : {{ cadre.anneeCarte }}</p>
-          <p>Numéro de carte : {{ cadre.numeroCarte }}</p>
-          <p>Fonctions au parti : {{ cadre.fonctionsParti }}</p>
-          <p>Numéro CIN : {{ cadre.numeroCIN }}</p>
-          <p>Date de délivrance de la CIN : {{ cadre.dateDelivranceCIN | date: 'dd/MM/yyyy' }}</p>
-          <p>Date d'expiration de la CIN : {{ cadre.dateExpirationCIN | date: 'dd/MM/yyyy' }}</p>
-          <p>Numéro de carte électeur : {{ cadre.numeroCarteElecteur }}</p>
-          <p>Centre de vote : {{ cadre.centreVote }}</p>
-          <p>Fédération : {{ cadre.federation }}</p>
-          <p>Section : {{ cadre.section }}</p>
-          <p>Secteur : {{ cadre.secteur }}</p>
-          <p>Mouvement de soutien : {{ cadre.mouvementSoutien }}</p>
-          <p>Région : {{ cadre.region }}</p>
-          <p>Commune : {{ cadre.commune }}</p>
-          <p>Départ : {{ cadre.depart }}</p>
-          <p>Village : {{ cadre.village }}</p>
-          <p>Numéro de centre de vote : {{ cadre.numeroCentreVote }}</p>
-          <p>Numéro de bureau de vote : {{ cadre.numeroBureauVote }}</p>
-        </div>
+
+
+
       </div>
-    </mat-card>
 
     </div>
   </mat-card-content>
-  <button mat-button (click)="generatePDF()">Générer PDF</button>
 
-</mat-card>

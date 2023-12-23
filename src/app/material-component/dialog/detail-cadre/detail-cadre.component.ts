@@ -21,6 +21,9 @@ export class DetailCadreComponent implements OnInit {
   @ViewChild('profileContainer', { static: false })
   profileContainer!: ElementRef;
 
+  @ViewChild('fileInput', { static: false }) fileInput!: ElementRef;
+
+
 
   identificationForm:any = FormGroup;
   situationMilitanteForm:any = FormGroup;
@@ -97,11 +100,6 @@ export class DetailCadreComponent implements OnInit {
     if(this.dialogData.action === "Détails"){
       this.dialogAction = "Détails"
       this.cadre = this.dialogData.data
-      console.log("=========================================== this.dialogData =================================================================")
-      console.log(this.dialogData.data)
-      console.log(this.cadre)
-      console.log("=========================================== this.dialogData =================================================================")
-
 
       /*  this.identificationForm.patchValue(this.dialogData.data)
       this.situationMilitanteForm.patchValue(this.dialogData.data)
@@ -110,6 +108,16 @@ export class DetailCadreComponent implements OnInit {
 
   }
 
+  loadCadre(id: string): void {
+    this.patientService.getOneCadre(id).subscribe(
+      (res: any) => {
+        this.cadre = res;
+      },
+      (error: any) => {
+        console.log(error);
+      }
+    );
+  }
 
   ngAfterViewInit() {
     // Wait for the view to initialize
@@ -120,8 +128,6 @@ export class DetailCadreComponent implements OnInit {
 
   generatePDF() {
     const element = this.profileContainer.nativeElement;
-
-    console.log(element)
 
     const options = {
       margin: 10,
@@ -219,6 +225,34 @@ export class DetailCadreComponent implements OnInit {
       this.snackbarService.openSnackbar(this.responseMessage,GlobalConstants.error)
     })
 
+  }
+
+  triggerFileInput(): void {
+    const fileInput: HTMLElement | null = document.getElementById('fileInput');
+    if (fileInput) {
+      fileInput.click(); // Déclencher le clic sur l'input de type fichier
+    }
+  }
+
+  onUpload(): void {
+    if (this.fileInput && this.fileInput.nativeElement.files.length > 0) {
+      const imageBlob = this.fileInput.nativeElement.files[0];
+      const file = new FormData();
+      file.append('file', imageBlob);
+
+      this.patientService.uploadImages(this.cadre.id,file).subscribe((res: any) => {
+        this.cadre.image = res.filename;
+        this.loadCadre(this.cadre.id);
+      },
+      (error: any) => {
+        console.error(error);
+      }
+      );
+    }
+  }
+
+  getImageUrl(): string {
+    return this.cadre.image ? this.patientService.getImageUrl(this.cadre.image) : '../../../assets/img/profil.png';
   }
 
 
