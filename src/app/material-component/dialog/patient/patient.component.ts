@@ -95,7 +95,60 @@ export class PatientComponent implements OnInit {
       this.action = "Modifier"
       this.identificationForm.patchValue(this.dialogData.data)
       this.situationMilitanteForm.patchValue(this.dialogData.data)
-      this.situationProfForm.patchValue(this.dialogData.data)
+     // this.situationProfForm.patchValue(this.dialogData.data)
+     // Situation Professionnelle Form
+
+     this.situationProfForm.patchValue({
+      professionActuelle: this.dialogData.data.professionActuelle?.toString() || '',
+      fonctionActuelle: this.dialogData.data.fonctionActuelle || '',
+      specialisation: this.dialogData.data.specialisation || '',
+      niveauEtude: this.dialogData.data.niveauEtude || '',
+      diplomes: this.dialogData.data.diplome ? this.dialogData.data.diplome.map((diplome: any) => this.formBuilder.control(diplome)) : [],
+      fonctionAnterieures: this.dialogData.data.fonctionAnterieure ? this.dialogData.data.fonctionAnterieure.map((fonctionAnterieure: any) => this.formBuilder.control(fonctionAnterieure)) : [],
+      langueParlees: this.dialogData.data.languesParlees || '',
+      langueEcrites: this.dialogData.data.languesEcrites || '',
+      autres: this.dialogData.data.autres || '',
+    });
+
+    console.log("this.situationProfForm.patchValue")
+    console.log(this.dialogData.data)
+    console.log(this.dialogData.data.professionActuelle.toString())
+    console.log(this.dialogData.data.diplome);
+    console.log(this.dialogData.data.fonctionAnterieure);
+    console.log(this.dialogData.data.languesParlees);
+    console.log(this.dialogData.data.langueEcrites);
+    console.log(this.situationProfForm.get('langueParlees').value);
+    console.log(this.situationProfForm.get('langueEcrites').value);
+
+    console.log(this.situationProfForm.get('diplomes'))
+    console.log(this.situationProfForm.get('fonctionAnterieures'))
+    console.log(this.situationProfForm.get('langueParlees'))
+    console.log(this.situationProfForm.get('langueEcrites'))
+    console.log("this.situationProfForm.patchValue")
+
+    if (this.dialogData.data) {
+      // Patch des valeurs pour le FormArray des diplômes
+      const diplomesArray = this.situationProfForm.get('diplomes') as FormArray;
+      diplomesArray.clear(); // Supprime tous les contrôles existants du FormArray
+
+      if (this.dialogData.data.diplome && Array.isArray(this.dialogData.data.diplome)) {
+        this.dialogData.data.diplome.forEach((diplome: any) => {
+          diplomesArray.push(this.formBuilder.control(diplome));
+        });
+      }
+
+      // Patch des valeurs pour le FormArray des fonctions antérieures
+      const fonctionsAnterieuresArray = this.situationProfForm.get('fonctionAnterieures') as FormArray;
+      fonctionsAnterieuresArray.clear(); // Supprime tous les contrôles existants du FormArray
+
+      if (this.dialogData.data.fonctionAnterieure && Array.isArray(this.dialogData.data.fonctionAnterieure)) {
+        this.dialogData.data.fonctionAnterieure.forEach((fonctionAnterieure: any) => {
+          fonctionsAnterieuresArray.push(this.formBuilder.control(fonctionAnterieure));
+        });
+      }
+    }
+
+
     }
 
     this.getLangues()
@@ -268,6 +321,11 @@ export class PatientComponent implements OnInit {
     var situationMilitanteFormData = this.situationMilitanteForm.value;
     var situationProfFormData = this.situationProfForm.value;
 
+    const langueParlees = this.getLanguesParlees();
+    const langueEcrites = this.getLanguesEcrites();
+    const diplomes = this.getDiplomes();
+    const fonctionAnterieures = this.getFonctionAnterieuress();
+
     var data = {
       id : this.dialogData.data.id,
       identification: {
@@ -305,11 +363,11 @@ export class PatientComponent implements OnInit {
         professionActuelle: situationProfFormData.professionActuelle,
         fonctionActuelle: situationProfFormData.fonctionActuelle,
         niveauEtude: situationProfFormData.niveauEtude,
-        fonctionAnterieures:situationProfFormData.fonctionAnterieure,
-        diplomes: situationProfFormData.diplome, // Initialize with one field
+        fonctionAnterieures:fonctionAnterieures,
+        diplomes: diplomes, // Initialize with one field
         specialisation: situationProfFormData.specialisation,
-        langueParlees: situationProfFormData.langueParlees,
-        langueEcrites: situationProfFormData.langueEcrites,
+        langueParlees: langueParlees,
+        langueEcrites: langueEcrites,
         autres: situationProfFormData.autres
       }
     }
@@ -458,7 +516,7 @@ removeDiplome(index: number) {
 onProfessionActuelleChange() {
   const fonctionActuelleControl = this.situationProfForm.get('fonctionActuelle');
 
-  if (this.situationProfForm.get('professionActuelle').value === 'false') {
+  if (this.situationProfForm.get('professionActuelle').value == 'false') {
     fonctionActuelleControl.setValue('');
     fonctionActuelleControl.clearValidators();
   } else {
