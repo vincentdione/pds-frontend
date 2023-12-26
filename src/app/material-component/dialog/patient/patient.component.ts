@@ -395,14 +395,6 @@ export class PatientComponent implements OnInit {
 
   }
 
-  onCancelClick() {
-    this.dialogRef.close();
-  }
-
-  onPreviousClick(stepper: any) {
-    stepper.previous();
-  }
-
 
   getLangues(){
     this.langueService.getLangues().subscribe((res:any) => {
@@ -419,35 +411,42 @@ export class PatientComponent implements OnInit {
    })
   }
 
-  onSubmitClick(stepper:any) {
-    if(this.dialogAction == 'Modifier'){
-      if (stepper.selectedIndex === 0 && this.identificationForm.valid) {
-        stepper.next();
-      } else if (stepper.selectedIndex === 1 && this.situationMilitanteForm.valid) {
-        // Effectuer les actions nécessaires avec les données du formulaire
-        stepper.next();
-      }
-      else if (stepper.selectedIndex === 2 && this.situationProfForm.valid) {
-        // Effectuer les actions nécessaires avec les données du formulaire
-        this.edit()
-        this.dialogRef.close();
-      }
-    }
-    else {
-      if (stepper.selectedIndex === 0 && this.identificationForm.valid) {
-        stepper.next();
-      } else if (stepper.selectedIndex === 1 && this.situationMilitanteForm.valid) {
-        // Effectuer les actions nécessaires avec les données du formulaire
-        stepper.next();
-      }
-      else if (stepper.selectedIndex === 2 && this.situationProfForm.valid) {
-        // Effectuer les actions nécessaires avec les données du formulaire
-        this.add()
-        this.dialogRef.close();
-      }
-    }
-
+  onCancelClick() {
+    this.dialogRef.close();
   }
+
+  onPreviousClick(stepper: any) {
+    stepper.previous();
+  }
+
+
+  onSubmitClick(stepper: any) {
+
+    if (this.dialogAction == 'Modifier') {
+      if (stepper.selectedIndex === 0) {
+        stepper.next();
+      } else if (stepper.selectedIndex === 1) {
+        // Effectuer les actions nécessaires avec les données du formulaire
+        stepper.next();
+      } else if (stepper.selectedIndex === 2) {
+        // Effectuer les actions nécessaires avec les données du formulaire
+        this.edit();
+        this.dialogRef.close();
+      }
+    } else {
+      if (stepper.selectedIndex === 0) {
+        stepper.next();
+      } else if (stepper.selectedIndex === 1) {
+        // Effectuer les actions nécessaires avec les données du formulaire
+        stepper.next();
+      } else if (stepper.selectedIndex === 2) {
+        // Effectuer les actions nécessaires avec les données du formulaire
+        this.add();
+        this.dialogRef.close();
+      }
+    }
+  }
+
 
   onFileChange(event: any) {
     if (event.target.files && event.target.files[0]) {

@@ -61,19 +61,19 @@
               <p style="font-size: 18px" *ngIf="cadre.fonctionActuelle == 1 ">Fonction actuelle : {{ cadre.fonctionActuelle}}</p>
               <p style="font-size: 18px" *ngIf="cadre.niveauEtude !== null">Niveau d'étude : {{ cadre.niveauEtude }}</p>
               <p style="font-size: 18px" *ngIf="cadre.specialisation !== null">Spécialisation : {{ cadre.specialisation }}</p>
-              <p style="font-size: 18px">Fonctions Antérieures:</p>
+              <p style="font-size: 18px" *ngIf="cadre.fonctionAnterieure !== null">Fonctions Antérieures:</p>
               <ul *ngIf="cadre.fonctionAnterieure !== null">
                 <li *ngFor="let fonction of cadre.fonctionAnterieure">{{ fonction }}</li>
               </ul>
-              <p style="font-size: 18px">Diplomes:</p>
+              <p style="font-size: 18px" *ngIf="cadre.diplome !== null">Diplomes:</p>
               <ul *ngIf="cadre.diplome !== null">
                 <li *ngFor="let diplome of cadre.diplome">{{ diplome }}</li>
               </ul>
-              <p style="font-size: 18px">Langues parlées:</p>
+              <p style="font-size: 18px" *ngIf="cadre.languesParlees !== null">Langues parlées:</p>
               <ul *ngIf="cadre.languesParlees !== null">
                 <li *ngFor="let langue of cadre.languesParlees">{{ langue }}</li>
               </ul>
-              <p style="font-size: 18px">Langues écrites:</p>
+              <p style="font-size: 18px" *ngIf="cadre.languesEcrites !== null">Langues écrites:</p>
               <ul *ngIf="cadre.languesEcrites !== null">
                 <li *ngFor="let langue of cadre.languesEcrites" >{{ langue }}</li>
               </ul>

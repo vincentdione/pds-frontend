@@ -18,7 +18,8 @@
               <mat-label>Nom</mat-label>
               <input matInput formControlName="nom" required>
               <mat-error *ngIf="identificationForm.controls.nom.touched && identificationForm.controls.nom.invalid">
-                <span *ngIf="identificationForm.controls.nom.errors.required" >This field is mandatory</span>
+                <span *ngIf="identificationForm.controls.nom.errors.required">This field is mandatory</span>
+                <span *ngIf="!identificationForm.controls.nom.errors && !identificationForm.controls.nom.valid">Valid!</span>
               </mat-error>
             </mat-form-field>
           </div>
@@ -27,8 +28,8 @@
         <mat-form-field>
           <mat-label>Prénom</mat-label>
           <input matInput formControlName="prenom" required>
-          <mat-error *ngIf="identificationForm.controls.nom.touched && identificationForm.controls.nom.invalid">
-            <span *ngIf="identificationForm.controls.nom.errors.required" >This field is mandatory</span>
+          <mat-error *ngIf="identificationForm.controls.prenom.touched && identificationForm.controls.prenom.invalid">
+            <span *ngIf="identificationForm.controls.prenom.errors.required" >This field is mandatory</span>
           </mat-error>
         </mat-form-field>
       </div>
