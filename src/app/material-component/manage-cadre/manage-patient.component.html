@@ -96,12 +96,13 @@
     <ng-container matColumnDef="image">
       <th mat-header-cell *matHeaderCellDef>Image</th>
       <td mat-cell *matCellDef="let element">
-         <!-- Use ngIf to check if the cadre has a profile image -->
-         <img *ngIf="element.image" [src]="getImageUrl(element)" alt="Profile Image" width="50" height="50">
-         <!-- Use ngIf else to display a default image if no profile image is available -->
-         <ng-container *ngIf="!element.image;">
-            <img src="../../../assets/img/profil.png" alt="Default Image" width="50" height="50">
-         </ng-container>
+        <div class="profile-image-container">
+          <img *ngIf="element.image" [src]="getImageUrl(element)" alt="Profile Image" class="profile-image" width="50" height="50">
+          <!-- Use ngIf else to display a default image if no profile image is available -->
+          <ng-container *ngIf="!element.image;">
+            <img src="../../../assets/img/profil.png" alt="Default Image" class="profile-image" width="50" height="50">
+          </ng-container>
+        </div>
       </td>
    </ng-container>
 

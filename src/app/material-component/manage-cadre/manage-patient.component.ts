@@ -59,7 +59,12 @@ export class ManagePatientComponent implements OnInit {
 
     this.getLangues()
 
+    this.dialog.afterAllClosed.subscribe(() => {
+      this.onUpdateTable();
+    });
+
   }
+
 
   tableData(){
     this.cadreService.getCadres().subscribe((res:any) => {
@@ -96,6 +101,11 @@ export class ManagePatientComponent implements OnInit {
 
   }
 
+
+  onUpdateTable() {
+    this.tableData();
+  }
+
   applyFilter(event:Event){
      const filterValue = (event.target as HTMLInputElement).value;
      this.dataSource.filter = filterValue.trim().toLowerCase()
@@ -109,6 +119,7 @@ export class ManagePatientComponent implements OnInit {
     dialogConfig.width = "1000px"
     const dialogRef = this.dialog.open(PatientComponent,dialogConfig);
     this.router.events.subscribe(()=>{
+
       dialogRef.close();
     })
     const sub = dialogRef.componentInstance.onAddPatient.subscribe(

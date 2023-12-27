@@ -18,6 +18,9 @@ export class DetailCadreComponent implements OnInit {
   onAddPatient= new EventEmitter();
   onUpdatePatient= new EventEmitter();
 
+  onUpdateTable = new EventEmitter();
+
+
   @ViewChild('profileContainer', { static: false })
   profileContainer!: ElementRef;
 
@@ -212,6 +215,7 @@ export class DetailCadreComponent implements OnInit {
     this.patientService.updateCadre(data.id,data).subscribe((res:any)=>{
        this.dialogRef.close()
        this.onUpdatePatient.emit();
+       this.onUpdateTable.emit();
        this.responseMessage = res.message
        this.snackbarService.openSnackbar(this.responseMessage,"success")
     },(error)=>{
