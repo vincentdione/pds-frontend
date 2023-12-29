@@ -1,3 +1,4 @@
+import { TokenService } from './token.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
@@ -9,7 +10,15 @@ export class PatientService {
 
   url = environment.apiUrl;
 
-  constructor(private httpClient : HttpClient) { }
+  constructor(private httpClient : HttpClient,private tokenService: TokenService) { }
+
+  private getRequestHeaders(): HttpHeaders {
+    const token = this.tokenService.getToken();
+    return new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    });
+  }
 
   addCadre(data:any,file:any){
     return this.httpClient.post(this.url+"/cadres/add/", data,{
@@ -43,7 +52,8 @@ export class PatientService {
   }
 
   getCadres(){
-    return this.httpClient.get(this.url+"/cadres/get/")
+    const headers = this.getRequestHeaders();
+    return this.httpClient.get(this.url+"/cadres/get/",{ headers:headers })
   }
 
   getOneCadre(id:any){

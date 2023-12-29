@@ -16,18 +16,12 @@ export class RouteGuardService {
     let expectRoleArray = route.data
     expectRoleArray = expectRoleArray.expectedRole;
 
-    console.log("expectRoleArray"+expectRoleArray)
-
     const token : any = localStorage.getItem("token");
     var tokenPayload : any;
     try {
-      console.log("token"+token)
-      console.log(jwt_decode(token))
       tokenPayload = jwt_decode(token)
-      console.log("tokenPayload"+tokenPayload)
     } catch (error) {
       localStorage.clear();
-      console.log("clear token")
       this.router.navigate(["/"])
     }
 
@@ -48,7 +42,6 @@ export class RouteGuardService {
   }
   else {
     this.router.navigate(["/"]);
-    console.log("clear 2222 222")
     localStorage.clear();
     return false;
   }

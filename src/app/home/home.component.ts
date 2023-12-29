@@ -77,8 +77,6 @@ export class HomeComponent implements OnInit {
           localStorage.setItem("token",JSON.stringify(res?.token))
           localStorage.setItem("role",JSON.stringify(res?.role[0]))
           localStorage.setItem("userId",JSON.stringify(res?.user))
-          console.log(res?.token)
-          console.log(res?.role[0])
           this.responseMessage = res?.message
           this.snackbarService.openSnackbar(this.responseMessage,"")
           this.router.navigate(["/workspace/dashboard"])

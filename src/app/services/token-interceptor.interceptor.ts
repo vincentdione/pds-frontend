@@ -18,7 +18,6 @@ export class TokenInterceptorInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     const token = localStorage.getItem("token");
     if(token){
-      console.log("interceptor ok")
       request = request.clone({
         setHeaders: {Authorization : `Bearer ${token}`},
       })
@@ -31,7 +30,6 @@ export class TokenInterceptorInterceptor implements HttpInterceptor {
              if(this.router.url === "/"){}
              else {
                localStorage.clear();
-               console.log("clear token interceptor")
                this.router.navigate(["/"])
               }
             }

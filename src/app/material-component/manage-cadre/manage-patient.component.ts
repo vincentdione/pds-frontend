@@ -86,7 +86,6 @@ export class ManagePatientComponent implements OnInit {
     this.regionService.getRegions().subscribe((res:any) => {
       this.ngxService.stop()
       this.regions = res
-      console.log(res)
 
    },(error:any)=>{
      this.ngxService.stop()
