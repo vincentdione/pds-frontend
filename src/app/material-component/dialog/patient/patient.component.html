@@ -107,7 +107,9 @@
       </div>
 
       <mat-label>Image </mat-label>
-      <input  type="file" formControlName="image" (change)="onFileChange($event)">
+      <input  type="file" id="fileInput" formControlName="image" #fileInput (change)="onFileChange()">
+      <input type="file" id="fileInput" style="display: none" #fileInput (change)="onUpload()">
+
       <img *ngIf="imagePreviewUrl" [src]="imagePreviewUrl" alt="Aperçu de l'image" width="150">
       <mat-error *ngIf="identificationForm.controls.image.touched && identificationForm.controls.image.invalid">
         <span *ngIf="identificationForm.controls.image.errors.required" >This field is mandatory</span>

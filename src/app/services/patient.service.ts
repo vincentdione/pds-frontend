@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { TokenService } from './token.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -20,10 +21,12 @@ export class PatientService {
     });
   }
 
-  addCadre(data:any,file:any){
-    return this.httpClient.post(this.url+"/cadres/add/", data,{
-      headers: new HttpHeaders().set( 'Content-Type','application/json')
-    })
+  addCadre(data: any, file: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('data', JSON.stringify(data)); // Convert data to JSON string and append it
+    formData.append('file', file); // Append the file
+
+    return this.httpClient.post(this.url + "/cadres/add/", formData);
   }
 
 

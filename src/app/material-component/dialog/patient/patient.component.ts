@@ -4,7 +4,7 @@ import { SnackbarService } from './../../../services/snackbar.service';
 import { PatientService } from './../../../services/patient.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
-import { Component, OnInit, EventEmitter, Inject } from '@angular/core';
+import { Component, OnInit, EventEmitter, Inject, ViewChild, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-patient',
@@ -25,6 +25,7 @@ export class PatientComponent implements OnInit {
   langues: any [] = [];
 
   selectedFile!: File;
+  @ViewChild('fileInput', { static: false }) fileInput!: ElementRef;
 
 
   constructor(@Inject(MAT_DIALOG_DATA) public dialogData: any,
@@ -182,6 +183,7 @@ export class PatientComponent implements OnInit {
   getLanguesEcrites(): string[] {
     return this.situationProfForm.get('langueEcrites').value as string[];
   }
+
   add() {
     var identificationFormData = this.identificationForm.value;
     var situationMilitanteFormData = this.situationMilitanteForm.value;
@@ -195,14 +197,15 @@ export class PatientComponent implements OnInit {
 
     console.log(situationProfFormData)
 
-    const formData = new FormData();
 
-    if (identificationFormData.image instanceof File) {
-  formData.append("file", identificationFormData.image);
-} else {
-  console.error("identificationFormData.image is not a File object");
-  // Handle the error or log it as appropriate.
-}
+  const formData = new FormData();
+
+  if (identificationFormData.image instanceof File) {
+    formData.append('file', identificationFormData.image, identificationFormData.image.name);
+  } else {
+    console.error('identificationFormData.image is not a File object');
+    // Handle the error or log it as appropriate.
+  }
 
 
     var data = {
@@ -216,7 +219,7 @@ export class PatientComponent implements OnInit {
         telephoneFixe: identificationFormData.telephoneFixe,
         whatsapp: identificationFormData.whatsapp,
         email: identificationFormData.email,
-        image: identificationFormData.image,
+        image: this.selectedFile,
         url: identificationFormData.url
       },
       situationMilitante: {
@@ -447,24 +450,13 @@ export class PatientComponent implements OnInit {
     }
   }
 
-
-  onFileChange(event: any) {
-    if (event.target.files && event.target.files[0]) {
-      const file = event.target.files[0];
-      this.selectedFile = event.target.files[0]
-      // Afficher un aperçu de l'image
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        this.imagePreviewUrl = e.target.result;
-      };
-      reader.readAsDataURL(file);
-
-      // Mettre à jour la valeur du champ 'image' dans le formulaire
-      this.identificationForm.get('image')?.setValue(file.name); // Or use file content depending on your use case
-    } else {
-      // Réinitialiser l'aperçu de l'image si aucun fichier n'est sélectionné
-      this.imagePreviewUrl = null;
-      this.identificationForm.get('image')?.setValue(null);
+  onFileChange() {
+    if (this.fileInput && this.fileInput.nativeElement.files.length > 0) {
+      const imageBlob = this.fileInput.nativeElement.files[0];
+      const file = new FormData();
+      file.append('file', imageBlob);
+      this.selectedFile = imageBlob;
+      console.log(this.selectedFile)
     }
   }
 
@@ -537,6 +529,15 @@ createFonctionAnterieur(): FormGroup {
     annee: [''],// Set default value as needed
   });
 }
+
+onUpload(): void {
+  if (this.fileInput && this.fileInput.nativeElement.files.length > 0) {
+    const imageBlob = this.fileInput.nativeElement.files[0];
+    this.selectedFile = imageBlob;
+    console.log(this.selectedFile)
+  }
+}
+
 
 
 }
