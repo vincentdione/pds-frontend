@@ -1,4 +1,4 @@
-name: FNCL Frontend Publish Docker image
+name: FNCL Frontend Publish Docker image GOOD
 
 on:
   push:
